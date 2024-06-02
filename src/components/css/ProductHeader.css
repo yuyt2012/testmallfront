@@ -1,0 +1,17 @@
+/* Header.css */
+.ProductHeader {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.ProductHeader nav ul {
+    display: flex;
+    gap: 20px;
+}
+
+.ProductHeader nav ul li {
+    list-style: none;
+}

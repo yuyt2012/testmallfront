@@ -1,0 +1,17 @@
+/* Header.css */
+.AdminHeader {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.AdminHeader nav ul {
+    display: flex;
+    gap: 20px;
+}
+
+.AdminHeader nav ul li {
+    list-style: none;
+}

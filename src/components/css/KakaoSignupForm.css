@@ -1,0 +1,26 @@
+.KakaoSignupForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.KakaoSignupForm form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.KakaoSignupForm form label {
+    display: flex;
+    justify-content: space-between;
+}
+
+.KakaoSignupForm form label span {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}

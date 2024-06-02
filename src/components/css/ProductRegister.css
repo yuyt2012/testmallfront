@@ -1,0 +1,26 @@
+/* src/components/css/ProductRegister.css */
+
+.product-register {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 화면의 높이를 100%로 설정 */
+}
+
+.product-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* 각 레이블 사이에 간격 추가 */
+}
+
+.product-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* 레이블 내부의 요소들 사이에 간격 추가 */
+}
+
+.button-group {
+    display: flex;  /* 요소를 플렉스 컨테이너로 만듭니다 */
+    justify-content: space-between;  /* 버튼 사이에 공간을 동일하게 분배합니다 */
+}

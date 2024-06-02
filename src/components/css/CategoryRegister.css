@@ -1,0 +1,22 @@
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 40px); /* 뷰포트 높이의 100%에서 40px을 뺀 값 */
+    padding: 20px 0; /* 위아래로 20px의 패딩을 추가 */
+    box-sizing: border-box; /* 패딩을 포함하여 요소의 높이를 계산 */
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%; /* 요소의 너비를 100%로 설정 */
+    margin-bottom: 20px; /* 요소 아래에 20px의 마진을 추가 */
+}
+
+.form-title {
+
+}

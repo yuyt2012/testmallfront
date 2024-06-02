@@ -1,0 +1,8 @@
+/* src/components/Main.css */
+.Main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* 이 부분을 수정합니다. */
+  justify-content: flex-start;
+  padding: 20px;
+}

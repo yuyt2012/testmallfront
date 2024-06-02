@@ -1,0 +1,50 @@
+/* src/components/UserManagement.css */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.styled-table thead tr {
+    background-color: #009879;
+    color: white;
+    text-align: left;
+}
+
+.styled-table td {
+    text-align: center;
+}
+
+.styled-table th {
+    text-align: center;
+}
+
+.styled-table th, .styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table td:first-child {
+    color: blue;
+    text-decoration: underline;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.admin-button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;  /* 버튼의 아래쪽 마진을 20px로 설정 */
+}
+
+.admin-button {
+    font-size: 20px;  /* 버튼의 글씨 크기를 20px로 설정 */
+}

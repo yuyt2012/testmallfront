@@ -1,0 +1,39 @@
+/* src/components/css/EditInfo.css */
+.EditInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 화면의 높이를 100%로 설정하여 화면 중앙에 위치시킵니다. */
+}
+
+.EditInfo form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.EditInfo label {
+    margin-bottom: 10px; /* 라벨과 입력 폼 사이의 간격을 설정합니다. */
+}
+
+.EditInfo input {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center; /* 내용을 가운데 정렬합니다. */
+}
+
+.EditInfo button {
+    display: flex;
+    flex-direction: row; /* 텍스트를 가로로 정렬합니다. */
+    justify-content: center; /* 가로 방향으로 가운데 정렬합니다. */
+    align-items: center; /* 세로 방향으로 가운데 정렬합니다. */
+    width: 70px; /* 버튼의 너비를 설정합니다. */
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px; /* 버튼을 사용자 정보 폼 바로 아래에 위치시킵니다. */
+}
