@@ -6,30 +6,42 @@ import {getProductList} from "../api/ProductListAPI.jsx";
 
 const ProductManagement = () => {
     const [products, setProducts] = useState([]);
-    const navigate = useNavigate(); // useHistory hook
+    const [page, setPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0); // Add a state variable for the total pages
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProducts = async () => {
             const token = localStorage.getItem('token');
-            const fetchedProducts = await getProductList(10, 0, token); // 첫 페이지의 상품 목록을 가져옵니다.
+            const fetchedProducts = await getProductList(10, page, token);
             if (fetchedProducts && Array.isArray(fetchedProducts.content)) {
                 setProducts(fetchedProducts.content);
+                setTotalPages(fetchedProducts.totalPages); // Update the total pages
             } else {
                 console.error('fetchedProducts.content is not an array:', fetchedProducts);
             }
         };
 
         fetchProducts();
-    }, []);
+    }, [page]); // Add page as a dependency here
 
     const handleIdClick = (id) => {
-        // 상품 수정 폼으로 이동
         navigate(`/product-edit/${id}`);
     };
 
     const handleBack = (event) => {
         event.preventDefault();
         navigate(-1);
+    };
+
+    const handleNextPage = () => {
+        if (page < totalPages - 1) { // Check if there is a next page
+            setPage(page + 1);
+        }
+    };
+
+    const handlePreviousPage = () => {
+        setPage(page - 1); // Decrease the current page
     };
 
     return (
@@ -72,6 +84,11 @@ const ProductManagement = () => {
                 ))}
                 </tbody>
             </table>
+            <div className="admin-button-container">
+                <button onClick={handleBack}>뒤로가기</button>
+                <button onClick={handlePreviousPage} disabled={page === 0}>이전 페이지</button>
+                <button onClick={handleNextPage} disabled={page >= totalPages - 1}>다음 페이지</button>
+            </div>
         </div>
     );
 };

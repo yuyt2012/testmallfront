@@ -1,13 +1,12 @@
 import axios from "axios";
 
-export const saveProduct = async (productDTO, token) => {
+export const saveProduct = async (formData, token) => {
     try {
         const response = await axios({
             method: 'post',
             url: 'http://localhost:8080/product/save',
-            data: productDTO,
+            data: formData,
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `${token}`
             },
         });

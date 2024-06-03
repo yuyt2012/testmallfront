@@ -15,6 +15,8 @@ const ProductRegister = () => {
 
     const [categories, setCategories] = useState([]);
     const [childCategories, setChildCategories] = useState([]);
+    const [imageFile, setImageFile] = useState(null);
+    const [imagePath, setImagePath] = useState('');
 
     const navigate = useNavigate();
 
@@ -41,6 +43,11 @@ const ProductRegister = () => {
         setChildCategory(''); // 자식 카테고리 초기화
     };
 
+    const handleFileChange = (e) => {
+        setImageFile(e.target.files[0]);
+        setImagePath(e.target.value); // Set the image path
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -55,7 +62,14 @@ const ProductRegister = () => {
             description
         };
 
-        const product = await saveProduct(productDTO, token);
+        const json = JSON.stringify(productDTO);
+        const blob = new Blob([json], { type: "application/json" }); // Convert JSON string to Blob
+
+        const formData = new FormData(); // Use FormData to send the file
+        formData.append('productDTO', blob); // Add the Blob to formData
+        formData.append('image', imageFile); // Add the image file
+
+        const product = await saveProduct(formData, token); // Update this to send formData
         if (product) {
             alert('상품 등록 성공');
         } else {
@@ -111,6 +125,11 @@ const ProductRegister = () => {
                 <label>
                     Description:
                     <textarea value={description} onChange={(e) => setDescription(e.target.value)}/>
+                </label>
+                <label>
+                    Image:
+                    <input type="text" value={imagePath} readOnly/> {/* Add text input for the image path */}
+                    <input type="file" onChange={handleFileChange}/> {/* Add file input */}
                 </label>
                 <div className="button-group">
                     <button onClick={handleBack} className="button">뒤로 가기</button>

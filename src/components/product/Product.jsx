@@ -3,55 +3,70 @@ import React, {useState, useEffect, useRef} from 'react';
 import '../../components/css/Product.css';
 import ProductHeader from './ProductHeader.jsx'
 import {getCategories} from "../api/CategoryRegisterAPI.jsx";
+import {findAll} from "../api/ProductListAPI.jsx";
 
 function Product() {
-    const [parentCategories, setParentCategories] = useState([]); // Add state for parent categories
-    const [childCategories, setChildCategories] = useState({}); // Change this to an object
-    const [selectedCategory, setSelectedCategory] = useState(null); // Add this state
-    const categoryRef = useRef(null); // Add this ref
+    const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [selectedSubCategory, setSelectedSubCategory] = useState(null); // Add this state
 
     useEffect(() => {
-        const fetchCategories = async () => {
+        const fetchProductsAndCategories = async () => {
             const token = localStorage.getItem('token');
-            const categories = await getCategories(token); // Fetch categories
-            setParentCategories(categories); // Set parent categories
+            const fetchedProducts = await findAll(token);
+            console.log('Fetched products:', fetchedProducts); // Add this line
+            const fetchedCategories = await getCategories(token);
+            console.log('Fetched categories:', fetchedCategories); // Add this line
+            setProducts(fetchedProducts);
+            setCategories(fetchedCategories);
         };
-        fetchCategories();
+
+        fetchProductsAndCategories();
     }, []);
 
-    const handleCategoryClick = (category, event) => {
-        if (selectedCategory === category) {
-            setSelectedCategory(null); // Unselect the category
-            setChildCategories(prevState => ({
-                ...prevState,
-                [category.id]: null // Remove the child categories for this parent category
-            }));
-        } else {
-            setSelectedCategory(category); // Select the category
-            setChildCategories({ // Reset all child categories
-                [category.id]: category.subCategories // Update the child categories for this parent category
-            });
-            categoryRef.current.style.left = `${event.target.getBoundingClientRect().width}px`; // Set the left style dynamically
-        }
+    const handleCategoryClick = (category) => {
+        console.log('Category clicked:', category.name); // Add this line
+        setSelectedCategory(category.name);
+        setSelectedSubCategory(null);
+    };
+
+    const handleSubCategoryClick = (subCategory) => {
+        console.log('Subcategory clicked:', subCategory.name); // Add this line
+        setSelectedSubCategory(subCategory.name);
     };
 
     return (
         <div className="Product">
             <ProductHeader/>
-            <div className="product-list visible">
-                {parentCategories.map(category => ( // Render parent categories
-                    <div key={category.id} onClick={(event) => handleCategoryClick(category, event)}>
-                        {category.name}
-                        <div ref={categoryRef} className={`child-category-list ${childCategories[category.id] ? 'visible' : ''}`}>
-                            {childCategories[category.id]?.map(childCategory => ( // Render child categories for this parent category
-                                <div key={childCategory.id} onClick={() => handleCategoryClick(childCategory)}>
-                                    {childCategory.name}
-                                </div>
-                            ))}
-                        </div>
+            {categories.map(category => (
+                <div key={category.id}>
+                    <h2 onClick={() => handleCategoryClick(category)}>{category.name}</h2>
+                    {selectedCategory === category.name && category.subCategories.map(subCategory => (
+                        <h3 key={subCategory.id}
+                            onClick={() => handleSubCategoryClick(subCategory)}>{subCategory.name}</h3>
+                    ))}
+                    <div className="product-list">
+                        {products.filter(product => {
+                            console.log('Product:', product); // Add this line
+                            const matchesCategory = product.categoryName === category.name;
+                            console.log('Matches category:', matchesCategory); // Add this line
+                            const matchesSubCategory = !selectedSubCategory || product.subCategoryNames.includes(selectedSubCategory);
+                            console.log('Matches subcategory:', matchesSubCategory); // Add this line
+                            const matchesFilter = matchesCategory && matchesSubCategory;
+                            if (matchesFilter) {
+                                console.log('Filtered product:', product.name); // Add this line
+                            }
+                            return matchesFilter;
+                        }).map(product => (
+                            <div key={product.id}>
+                                <img src={`http://localhost:8080/${product.imageUrl}`} alt={product.name}/>
+                                <div>{product.name}</div>
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
+                </div>
+            ))}
         </div>
     );
 }
