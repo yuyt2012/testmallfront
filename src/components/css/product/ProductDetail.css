@@ -1,0 +1,25 @@
+/* src/components/product/ProductDetail.css */
+.product-detail-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.product-detail-left {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.product-detail-left img {
+    width: 100%;
+    height: auto;
+}
+
+.product-detail-right {
+    flex: 1;
+}
+
+.product-detail-container .product-detail-description {
+    position: relative;
+    top: -450px; /* Adjust this value as needed */
+}

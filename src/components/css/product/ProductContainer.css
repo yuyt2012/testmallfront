@@ -1,0 +1,12 @@
+/* src/styles/ProductContainer.css */
+
+.product-container {
+    position: absolute;
+    top: 100px; /* Adjust as needed */
+    bottom: 50px; /* Adjust as needed */
+    left: 55%; /* Center the container horizontally */
+    transform: translateX(-50%); /* Center the container horizontally */
+    max-width: 80%; /* Limit the width to 80% of the viewport width */
+    max-height: 80%; /* Limit the height to 80% of the viewport height */
+    padding: 20px; /* Add some padding */
+}

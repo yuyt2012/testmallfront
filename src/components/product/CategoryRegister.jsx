@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import '../css/CategoryRegister.css';
+import '../css/admin/CategoryRegister.css';
 import {createCategoryWithSubCategories} from "../api/CategoryRegisterAPI.jsx";
 
 function CategoryForm() {

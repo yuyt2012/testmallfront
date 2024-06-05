@@ -1,17 +1,4 @@
 /* Product.css */
-.product-list {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 200px;
-  height: 100%;
-  background: #f8f9fa;
-  padding: 20px;
-  box-sizing: border-box;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease-in-out;
-}
-
 .product-list.visible {
   transform: translateX(0);
 }
@@ -59,3 +46,17 @@
   margin-top: 10px; /* Decrease the top margin */
   margin-bottom: 10px; /* Decrease the bottom margin */
 }
+
+.Product {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Adjust as needed */
+}
+
+.ProductHeader {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+

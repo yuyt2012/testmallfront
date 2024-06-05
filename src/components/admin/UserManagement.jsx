@@ -1,7 +1,7 @@
 // src/components/UserManagement.jsx
 import React, {useState, useEffect} from 'react';
 import {fetchMembers} from '../api/MemberListAPI.jsx';
-import '../css/UserManagement.css';
+import '../css/admin/UserManagement.css';
 import {Link} from "react-router-dom";
 
 const UserManagement = () => {
@@ -35,7 +35,6 @@ const UserManagement = () => {
                 <tr>
                     <th>ID</th>
                     <th>Email</th>
-                    <th>Password</th>
                     <th>Name</th>
                     <th>Phone</th>
                     <th>Role</th>
@@ -48,7 +47,6 @@ const UserManagement = () => {
                     <tr key={index}>
                         <td>{member.id}</td>
                         <td>{member.email}</td>
-                        <td>{member.password}</td>
                         <td>{member.name}</td>
                         <td>{member.phone}</td>
                         <td>{member.role}</td>

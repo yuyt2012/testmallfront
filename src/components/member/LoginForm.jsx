@@ -3,7 +3,7 @@ import React, {useContext} from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import kakaoLoginImage from '/image/kakao_login_medium_narrow.png';
 import Footer from '../Footer.jsx';
-import '../css/LoginForm.css';
+import '../css/member/LoginForm.css';
 import { AuthContext } from '../../contexts/AuthContext.jsx';
 import { handleLogin } from '../api/GeneralLoginAPI.jsx';
 import { handleKakaoLogin } from '../api/KakaoLoginAPI.jsx';

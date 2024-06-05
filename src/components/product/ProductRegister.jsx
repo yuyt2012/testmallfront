@@ -1,7 +1,7 @@
 // src/components/admin/ProductRegister.jsx
 import React, {useState, useEffect} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
-import '../css/ProductRegister.css';
+import '../css/product/ProductRegister.css';
 import {getCategories} from '../api/CategoryRegisterAPI.jsx';
 import {saveProduct} from '../api/ProductSaveAPI.jsx';
 

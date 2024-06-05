@@ -1,8 +1,8 @@
 // src/components/ProductManagement.jsx
 import React, {useState, useEffect} from 'react';
 import {Link, useNavigate} from 'react-router-dom'; // useHistory import
-import '../css/ProductManagement.css';
-import {getProductList} from "../api/ProductListAPI.jsx";
+import '../css/product/ProductManagement.css';
+import {getProductList} from "../api/ProductGetAPI.jsx";
 
 const ProductManagement = () => {
     const [products, setProducts] = useState([]);

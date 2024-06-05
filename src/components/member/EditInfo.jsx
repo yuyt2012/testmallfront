@@ -2,7 +2,7 @@
 import React, {useContext, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {AuthContext} from '../../contexts/AuthContext.jsx';
-import '../css/EditInfo.css';
+import '../css/member/EditInfo.css';
 import Footer from "../Footer.jsx";
 import {updateMemberAPI} from "../api/UpdateMemberAPI.jsx";
 import axios from "axios";

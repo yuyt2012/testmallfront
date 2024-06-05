@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {v4 as uuidv4} from 'uuid';
-import '../css/KakaoSignupForm.css';
+import '../css/member/KakaoSignupForm.css';
 import axios from "axios";
 import Footer from "../Footer.jsx";
 

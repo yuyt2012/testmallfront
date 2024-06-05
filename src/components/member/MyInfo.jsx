@@ -2,7 +2,7 @@
 import React, {useContext} from 'react';
 import {Link} from 'react-router-dom';
 import {AuthContext} from '../../contexts/AuthContext.jsx';
-import '../css/MyInfo.css';
+import '../css/member/MyInfo.css';
 import Footer from "../Footer.jsx";
 
 function MyInfo() {

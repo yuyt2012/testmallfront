@@ -2,7 +2,7 @@
 import {useNavigate} from 'react-router-dom';
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import '../css/SignupForm.css';
+import '../css/member/SignupForm.css';
 import {v4 as uuidv4} from 'uuid';
 import Footer from '../Footer.jsx';
 

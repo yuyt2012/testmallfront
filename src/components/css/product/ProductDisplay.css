@@ -1,0 +1,37 @@
+/* src/styles/ProductDisplay.css */
+
+.product-table {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Create two equal columns */
+    grid-auto-rows: auto; /* Set the row height to auto */
+    gap: 10px; /* Set the gap between grid items */
+}
+.table-row {
+    flex: 1 0 50%; /* This will ensure that each row takes up 50% of the width, but also that it doesn't grow beyond this */
+}
+
+.table-cell {
+    width: 100%; /* Set the width of each item to 100% of the grid cell */
+    height: 200px; /* Set a fixed height for each item */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.table-cell img {
+    width: 100%; /* Set the width of the image to 100% of the grid cell */
+    height: 100%; /* Set the height of the image to 100% of the grid cell */
+    object-fit: contain; /* Resize the image to fit the container, while maintaining its aspect ratio and without cropping the image */
+}
+
+.table-cell div {
+    text-align: center;
+}
+
+.product-table .table-cell img {
+    width: 200px; /* Set the width of the image */
+    height: 200px; /* Set the height of the image */
+    object-fit: contain; /* Resize the image to fill the container, while maintaining its aspect ratio */
+}

@@ -14,4 +14,11 @@
 
 .ProductHeader nav ul li {
     list-style: none;
+    cursor: pointer; /* Change the cursor to a hand pointer when hovering over the text */
+    text-decoration: underline;
 }
+
+.ProductHeader nav ul li:hover {
+    color: blue; /* Change the text color to blue when hovering over the text */
+}
+
