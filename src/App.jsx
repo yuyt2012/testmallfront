@@ -35,8 +35,8 @@ function App() {
                     <Route path="/edit" element={<EditInfo/>}/>
                     <Route path="/products" element={<Product/>}/>
                     <Route path="/product/:id" element={<ProductDetailContainer/>}/>
-                    <Route path="/carts" element={<Cart/>}/>
                     <Route path="/carts/:email" element={<Cart/>}/>
+                    <Route index path="/carts" element={<Cart/>}/>
                     <Route path="/admin" element={<Admin/>}/>
                     <Route path="/admin/post" element={<PostManagement/>}/>
                     <Route path="/admin/products" element={<ProductManagement/>}/>

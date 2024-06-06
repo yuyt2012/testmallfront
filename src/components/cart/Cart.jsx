@@ -11,14 +11,20 @@ function Cart() {
     // If no email in URL, try to get it from localStorage
     if (!email) {
         const user = JSON.parse(localStorage.getItem('user'));
-        email = user ? user.email : null;
+        email = user && user.email ? user.email : null;
     }
 
     useEffect(() => {
         const fetchCartProducts = async () => {
             if (email) {
                 const items = await cartProducts(10, 0, token, email);
-                setCartItems(items);
+                // Check if items is an array before setting the state
+                if (Array.isArray(items)) {
+                    setCartItems(items);
+                } else {
+                    console.error('Unexpected response from cartProducts API:', items);
+                    setCartItems([]); // Set to an empty array as a fallback
+                }
             } else {
                 console.error('No email found');
             }
