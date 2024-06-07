@@ -1,20 +1,23 @@
 // src/components/AdminPage.jsx
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import AdminHeader from './AdminHeader.jsx';
+import {Route, Routes} from 'react-router-dom';
 import UserManagement from './UserManagement.jsx';
 import ProductManagement from './ProductManagement.jsx';
 import PostManagement from './PostManagement.jsx';
+import CommonHeader from "../CommonHeader.jsx";
 
 const AdminPage = () => {
+
+    const links = [
+        {text: '회원관리', path: '/admin/users'},
+        {text: '상품관리', path: '/admin/products'},
+        {text: '게시판관리', path: '/admin/post'},
+        {text: '뒤로가기' }, // 실제 경로로 교체해야 합니다.
+
+    ];
     return (
         <div>
-            <AdminHeader />
-            <Routes>
-                <Route path="/users" element={<UserManagement />} />
-                <Route path="/products" element={<ProductManagement />} />
-                <Route path="/posts" element={<PostManagement />} />
-            </Routes>
+            <CommonHeader links={links}/>
         </div>
     );
 }

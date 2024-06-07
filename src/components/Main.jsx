@@ -1,8 +1,8 @@
 // src/components/Main.jsx
 import React, {useContext, useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Header from './Header';
 import Footer from './Footer';
+import CommonHeader from "./CommonHeader.jsx";
 import './css/Main.css';
 import { AuthContext } from '../contexts/AuthContext.jsx';
 
@@ -15,9 +15,21 @@ function Main() {
         navigate('/'); // 홈으로 이동합니다.
     };
 
+    const links = [
+        {text: '쇼핑하러가기', path: '/products'},
+        {text: '주문상품확인', path: '/orders'},
+        {text: '내 정보', path: '/myinfo'},
+    ];
+
+    if (user && user.role === 'ADMIN') {
+        links.push({text: '관리자 페이지', path: '/admin'});
+    }
+
+
     return (
         <div className="Main">
-            <Header/>
+            {/* eslint-disable-next-line no-undef */}
+            <CommonHeader links={links}/>
             <div className="login-section">
                 {user ? (
                     <>

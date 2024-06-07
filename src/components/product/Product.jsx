@@ -1,11 +1,32 @@
 // Product.jsx
 import React, {useState, useEffect, useRef} from 'react';
-import '../css/product/Product.css';
-import ProductHeader from './ProductHeader.jsx'
+import {Card, CardActionArea, CardContent, CardMedia, Typography, Button} from '@material-ui/core';
+import {makeStyles} from '@material-ui/core/styles';
 import {getCategories} from "../api/CategoryRegisterAPI.jsx";
 import ProductContainer from "./ProductContainer.jsx";
+import CommonHeader from "../CommonHeader.jsx";
+import '../css/product/Product.css';
+
+const useStyles = makeStyles({
+    root: {
+        maxWidth: 130,
+        padding: 30,
+        margin: 10,
+        marginTop: 20,
+    },
+    media: {
+        height: 140,
+    },
+    typography: {
+        alignSelf: 'flex-start',
+    },
+    button: {
+        alignSelf: 'flex-start',
+    },
+});
 
 function Product() {
+    const classes = useStyles();
     const [parentCategories, setParentCategories] = useState([]); // Add state for parent categories
     const [childCategories, setChildCategories] = useState({}); // Change this to an object
     const [selectedParentCategory, setSelectedParentCategory] = useState('의류');
@@ -41,7 +62,6 @@ function Product() {
                 console.log(category.subCategories);
             }
         }
-        categoryRef.current.style.left = `${event.target.getBoundingClientRect().width}px`;
 
         // Stop event propagation for child category click events
         if (isChildCategory) {
@@ -53,26 +73,42 @@ function Product() {
         console.log('Selected child category:', selectedChildCategory);
     }, [selectedChildCategory]);
 
+    const links = [
+        {text: '장바구니', path: '/carts'},
+        {text: '주문상품확인', path: '/orders'},
+        {text: '내 정보', path: '/myinfo'},
+        {text: '뒤로가기' }, // 실제 경로로 교체해야 합니다.
+    ];
+
     return (
         <div className="Product">
-            <ProductHeader/>
+            <CommonHeader links={links}/>
             <div className="product-list visible">
                 {parentCategories.map(category => (
-                    // Render parent categories
-                    <div key={category.id} onClick={(event) => handleCategoryClick(category, event)}>
-                        {category.name}
-                        <div ref={categoryRef} className={`child-category-list ${childCategories[category.id] ? 'visible' : ''}`}>
-                            {childCategories[category.id]?.map(childCategory => ( // Render child categories for this parent category
-                                <div key={childCategory.id}
-                                     onClick={(event) => handleCategoryClick(childCategory, event, true)}>
-                                    {childCategory.name}
+                    // eslint-disable-next-line react/jsx-key
+                    <Card className={classes.root}>
+                        <CardActionArea onClick={(event) => handleCategoryClick(category, event)}>
+                            <CardContent className={classes.content}>
+                                <Typography gutterBottom variant="h5" component="h2" className={classes.typography}>
+                                    {category.name}
+                                </Typography>
+                                <div ref={categoryRef}
+                                     className={`child-category-list ${childCategories[category.id] ? 'visible' : ''}`}>
+                                    {childCategories[category.id]?.map(childCategory => (
+                                        <Button key={childCategory.id}
+                                                onClick={(event) => handleCategoryClick(childCategory, event, true)}
+                                                className={classes.button}>
+                                            {childCategory.name}
+                                        </Button>
+                                    ))}
                                 </div>
-                            ))}
-                        </div>
-                    </div>
+                            </CardContent>
+                        </CardActionArea>
+                    </Card>
                 ))}
             </div>
-            <ProductContainer selectedParentCategory={selectedParentCategory} selectedChildCategory={selectedChildCategory} />
+            <ProductContainer selectedParentCategory={selectedParentCategory}
+                              selectedChildCategory={selectedChildCategory}/>
         </div>
     );
 }

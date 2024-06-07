@@ -1,0 +1,24 @@
+.Header {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.Header nav ul {
+    display: flex;
+    gap: 20px;
+}
+
+.Header nav ul li {
+    list-style: none;
+}
+
+.logo {
+    position: absolute; /* 로고를 절대 위치로 설정하여 nav 요소 내에서 자유롭게 이동할 수 있게 합니다. */
+    left: 0; /* 로고를 왼쪽 끝에 위치시킵니다. */
+    padding-left: 30px;
+    height: 70px; /* 로고의 높이를 설정합니다. */
+    cursor: pointer; /* 마우스 커서를 포인터로 변경하여 클릭 가능함을 나타냅니다. */
+}

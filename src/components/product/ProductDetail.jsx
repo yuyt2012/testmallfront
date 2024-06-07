@@ -3,10 +3,26 @@ import React, {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import {getProduct} from '../api/ProductGetAPI.jsx';
 import {fetchImage} from '../api/ImageAPI.jsx';
+import {Card, CardMedia, CardContent, Typography, Button, Grid} from '@material-ui/core';
+import {makeStyles} from '@material-ui/core/styles';
 import '../css/product/ProductDetail.css';
 import {addToCart} from "../api/CartAPI.jsx";
 
+const useStyles = makeStyles({
+    root: {
+        maxWidth: 345,
+    },
+
+    media: {
+        height: 0,
+        paddingTop: '50%', // Make the media item a square
+        backgroundSize: 'auto', // Ensure the image covers the entire CardMedia area
+    },
+});
+
+
 function ProductDetail() {
+    const classes = useStyles();
     const {id} = useParams(); // Get the product ID from the URL
     const [product, setProduct] = useState(null);
     const [quantity, setQuantity] = useState(1);
@@ -59,26 +75,40 @@ function ProductDetail() {
     }
 
     return (
-        <div className="product-detail-container">
-            <div className="product-detail-content">
-                <div className="product-detail-left">
-                    <img src={product.image} alt={product.name}/> {/* Use the fetched image */}
-                </div>
-                <div className="product-detail-right">
-                    <h2>{product.name}</h2>
-                    <p>Price: {product.price}</p>
-                    <input type="number" value={quantity} onChange={handleQuantityChange} min="1"/>
-                    <br/>
-                    <button onClick={handleAddToCart}>Add to Cart</button>
-                    <button onClick={handlePurchase}>Purchase</button>
-                    <br/>
-                    <p>Total: {product.price * quantity}</p>
-                </div>
-            </div>
-            <div className="product-detail-description">
-                <p>{product.description}</p>
-            </div>
-        </div>
+        <Grid container spacing={3}>
+            <Grid item xs={6}>
+                <CardMedia
+                    className={classes.media}
+                    image={product.image}
+                    title={product.name}
+                />
+            </Grid>
+            <Grid item xs={6}>
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+                        {product.name}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        Price: {product.price}
+                    </Typography>
+                    <input type="number" value={quantity} onChange={handleQuantityChange} min="1"/><br/>
+                    <Button variant="contained" color="primary" onClick={handleAddToCart}>
+                        Add to Cart
+                    </Button>
+                    <Button variant="contained" color="secondary" onClick={handlePurchase}>
+                        Purchase
+                    </Button>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        Total: {product.price * quantity}
+                    </Typography>
+                </CardContent>
+            </Grid>
+            <Grid item xs={12}>
+                <Typography variant="body2" color="textSecondary" component="p">
+                    {product.description} {/* Assuming product.description contains the product description */}
+                </Typography>
+            </Grid>
+        </Grid>
     );
 }
 

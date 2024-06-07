@@ -20,7 +20,7 @@ export const addToCart = async (productId, quantity, email, token) => {
     }
 }
 
-export const cartProducts = async (size= 10, page= 0, token, email) => {
+export const cartProducts = async (size = 10, page = 0, token, email) => {
     try {
         const response = await axios({
             method: 'get',
@@ -37,5 +37,20 @@ export const cartProducts = async (size= 10, page= 0, token, email) => {
     } catch (error) {
         console.error('Failed to fetch cart products', error);
         return [];
+    }
+}
+
+export const deleteCartProduct = async (productName, userName, token) => {
+    try {
+        const response = await axios({
+            method: 'delete',
+            url: `http://localhost:8080/cart/delete/${productName}/${userName}`,
+            headers: {
+                'Authorization': `${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Failed to delete cart product', error);
     }
 }
