@@ -102,26 +102,34 @@ function Cart() {
     };
 
     const handleOrderClick = () => {
-        // 체크된 항목을 주문 처리합니다.
-        // 이 부분은 실제 주문 처리 로직으로 교체해야 합니다.
-        console.log('Ordering items:', checkedProducts);
+        if (checkedProducts.length === 0) {
+            // 선택된 제품이 없다면 경고 메시지를 표시합니다.
+            alert('상품이 선택되지 않았습니다.');
+        } else {
+            // 체크된 항목을 주문 처리합니다.
+            const checkedItems = cartProduct.filter(product => checkedProducts.includes(product.productName));
+            navigate('/order/cart', {state: {checkedItems}});
+        }
     };
 
     const handleDeleteClick = async () => {
-        // 체크된 항목을 장바구니에서 삭제합니다.
-        // 이 부분은 실제 삭제 처리 로직으로 교체해야 합니다.
-        for (const productName of checkedProducts) {
-            const product = cartProduct.find(product => product.productName === productName);
-            if (product) {
-                try {
-                    await deleteCartProduct(productName, user.name, token);
-                    console.log('Deleted:', productName);
-                    console.log('user.id:', user.name);
-                } catch (error) {
-                    console.error('Failed to delete:', productName, error);
+        if (checkedProducts.length === 0) {
+            // 선택된 제품이 없다면 경고 메시지를 표시합니다.
+            alert('상품이 선택되지 않았습니다.');
+        } else {
+            for (const productName of checkedProducts) {
+                const product = cartProduct.find(product => product.productName === productName);
+                if (product) {
+                    try {
+                        await deleteCartProduct(productName, user.email, token);
+                        console.log('Deleted:', productName);
+                        console.log('user.email:', user.email);
+                    } catch (error) {
+                        console.error('Failed to delete:', productName, error);
+                    }
                 }
+                console.log('Deleting items:', checkedProducts);
             }
-            console.log('Deleting items:', checkedProducts);
         }
 
         const updatedCartProducts = await cartProducts(10, 0, token, email);

@@ -1,9 +1,5 @@
 // src/components/AdminPage.jsx
 import React from 'react';
-import {Route, Routes} from 'react-router-dom';
-import UserManagement from './UserManagement.jsx';
-import ProductManagement from './ProductManagement.jsx';
-import PostManagement from './PostManagement.jsx';
 import CommonHeader from "../CommonHeader.jsx";
 
 const AdminPage = () => {

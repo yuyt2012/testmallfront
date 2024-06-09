@@ -40,11 +40,11 @@ export const cartProducts = async (size = 10, page = 0, token, email) => {
     }
 }
 
-export const deleteCartProduct = async (productName, userName, token) => {
+export const deleteCartProduct = async (productName, email, token) => {
     try {
         const response = await axios({
             method: 'delete',
-            url: `http://localhost:8080/cart/delete/${productName}/${userName}`,
+            url: `http://localhost:8080/cart/delete/${productName}/${email}`,
             headers: {
                 'Authorization': `${token}`
             }

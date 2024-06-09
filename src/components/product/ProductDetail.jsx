@@ -1,13 +1,13 @@
 // src/components/product/ProductDetail.jsx
-import React, {useState, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import React, {useState, useEffect, useContext} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
 import {getProduct} from '../api/ProductGetAPI.jsx';
 import {fetchImage} from '../api/ImageAPI.jsx';
 import {Card, CardMedia, CardContent, Typography, Button, Grid} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import '../css/product/ProductDetail.css';
 import {addToCart} from "../api/CartAPI.jsx";
-
+import ProductContext from "../../contexts/ProductContext.jsx";
 const useStyles = makeStyles({
     root: {
         maxWidth: 345,
@@ -30,6 +30,8 @@ function ProductDetail() {
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user'));
     const email = user ? user.email : null;
+    const navigate = useNavigate();
+    const { setOrderProduct } = useContext(ProductContext); // Add this line
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -59,6 +61,8 @@ function ProductDetail() {
 
     const handlePurchase = () => {
         // Implement purchase functionality here
+        setOrderProduct({ product, quantity }); // Set the product and quantity in the context
+        navigate(`/order/product/${product.id}`, { state: { quantity } });
     };
 
     const handleAddToCart = async () => {
