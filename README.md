@@ -1,8 +1,12 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```mermaid
+graph TD
+    A[Start] --> B[Load Data]
+    B --> C[Preprocess Data]
+    C --> D[Train Model]
+    D --> E[Save Model]
+    E --> F[Load Model]
+    F --> G[Make Predictions]
+    G --> H[Evaluate Model]
+    H --> I[End]
+    I --> J[Exit]
+```
