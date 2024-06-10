@@ -4,7 +4,7 @@ export const updateMemberAPI = async (updateMemberDTO, token) => {
     try {
         const response = await axios({
             method: 'patch',
-            url: 'http://localhost:8080/update',
+            url: 'http://localhost:8080/member/update',
             data: updateMemberDTO,
             headers: {
                 'Content-Type': 'application/json',

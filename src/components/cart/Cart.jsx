@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {cartProducts} from '../api/CartAPI.jsx';
 import {
     Checkbox,
@@ -16,6 +16,7 @@ import {fetchImage} from "../api/ImageAPI.jsx";
 import {useParams, useNavigate} from "react-router-dom";
 import CommonHeader from '../CommonHeader.jsx';
 import {deleteCartProduct} from "../api/CartAPI.jsx";
+import ProductContext from "../../contexts/ProductContext.jsx";
 
 const useStyles = makeStyles({
     header: {
@@ -51,7 +52,8 @@ function Cart() {
     const [checkedProducts, setCheckedProducts] = useState([]);
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem('user'));
-    // If no email in URL, try to get it from localStorage
+    const {setOrderProducts, setOrderQuantities} = useContext(ProductContext);
+
 
     if (!email) {
         email = user && user.email ? user.email : null;
@@ -108,7 +110,12 @@ function Cart() {
         } else {
             // 체크된 항목을 주문 처리합니다.
             const checkedItems = cartProduct.filter(product => checkedProducts.includes(product.productName));
-            navigate('/order/cart', {state: {checkedItems}});
+            const checkedQuantities = checkedItems.map(item => item.quantity); // Get the quantities of the checked items
+
+            setOrderProducts(checkedItems); // Save the checked items to the context
+            setOrderQuantities(checkedQuantities); // Save the quantities of the checked items to the context
+
+            navigate('/order/cart'); // Navigate to the order page
         }
     };
 
@@ -117,24 +124,27 @@ function Cart() {
             // 선택된 제품이 없다면 경고 메시지를 표시합니다.
             alert('상품이 선택되지 않았습니다.');
         } else {
-            for (const productName of checkedProducts) {
-                const product = cartProduct.find(product => product.productName === productName);
-                if (product) {
-                    try {
-                        await deleteCartProduct(productName, user.email, token);
-                        console.log('Deleted:', productName);
-                        console.log('user.email:', user.email);
-                    } catch (error) {
-                        console.error('Failed to delete:', productName, error);
+            // 사용자에게 확인 메시지를 표시합니다.
+            const confirmDelete = window.confirm('상품을 삭제하시겠습니까?');
+            if (confirmDelete) {
+                for (const productName of checkedProducts) {
+                    const product = cartProduct.find(product => product.productName === productName);
+                    if (product) {
+                        try {
+                            await deleteCartProduct(productName, user.email, token);
+                            console.log('Deleted:', productName);
+                            console.log('user.email:', user.email);
+                        } catch (error) {
+                            console.error('Failed to delete:', productName, error);
+                        }
                     }
+                    console.log('Deleting items:', checkedProducts);
                 }
-                console.log('Deleting items:', checkedProducts);
             }
         }
 
         const updatedCartProducts = await cartProducts(10, 0, token, email);
         setCartProduct(updatedCartProducts.content || []);
-
     };
 
     const links = [

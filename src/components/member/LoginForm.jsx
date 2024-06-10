@@ -1,12 +1,11 @@
-// src/components/LoginForm.jsx
 import React, {useContext} from 'react';
 import {useNavigate, Link} from 'react-router-dom';
-import kakaoLoginImage from '/image/kakao_login_medium_narrow.png';
-import Footer from '../Footer.jsx';
 import {AuthContext} from '../../contexts/AuthContext.jsx';
 import {handleLogin} from '../api/GeneralLoginAPI.jsx';
 import {handleKakaoLogin} from '../api/KakaoLoginAPI.jsx';
 import CommonHeader from "../CommonHeader.jsx";
+import { Container, Box, TextField, Button } from '@material-ui/core';
+import kakaoLoginImage from '/image/kakao_login_medium_narrow.png';
 
 const LoginForm = () => {
     const {setUser} = useContext(AuthContext);
@@ -28,36 +27,32 @@ const LoginForm = () => {
     };
 
     const links = [
-        {text: '뒤로가기' }, // 실제 경로로 교체해야 합니다.
-
+        {text: '뒤로가기'}, // 실제 경로로 교체해야 합니다.
     ];
 
     return (
-        <div>
+        <>
             <CommonHeader links={links}/>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>
-                        Email:
-                        <input type="email" name="email"/>
-                    </label>
-                    <label>
-                        Password:
-                        <input type="password" name="password"/>
-                    </label>
-                </div>
-                <input type="submit" value="로그인"/>
-            </form>
-            <div>
-                <button onClick={handleKakaoLogin}>
-                    <img src={kakaoLoginImage} alt="카카오로 로그인"/>
-                </button>
-                <Link to="/signup">
-                    <button>회원가입</button>
-                </Link>
-            </div>
-            <Footer/>
-        </div>
+            <Container style={{width: '20%', height: '0%', position: 'relative', top: '-200px', overflow: 'hidden'}}>
+                <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+                    <form onSubmit={handleSubmit}>
+                        <TextField label="Email" type="email" name="email" fullWidth margin="normal" required />
+                        <TextField label="Password" type="password" name="password" fullWidth margin="normal" required />
+                        <Button type="submit" variant="contained" color="primary" fullWidth>로그인</Button>
+                    </form>
+                    <Box mt={0}>
+                        <Button style={{position: 'relative', top: '-200px'}} onClick={handleKakaoLogin} variant="contained" fullWidth>
+                            <img src={kakaoLoginImage} alt="카카오로 로그인"/>
+                        </Button>
+                    </Box>
+                    <Box mt={2}>
+                        <Link to="/signup">
+                            <Button style={{position: 'relative', top: '-200px'}} variant="contained" color="secondary" fullWidth>회원가입</Button>
+                        </Link>
+                    </Box>
+                </Box>
+            </Container>
+        </>
     );
 }
 

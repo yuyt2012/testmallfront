@@ -1,59 +1,46 @@
-// src/components/MyInfo.jsx
 import React, {useContext} from 'react';
-import {Link} from 'react-router-dom';
+import {Link as RouterLink} from 'react-router-dom';
 import {AuthContext} from '../../contexts/AuthContext.jsx';
-import '../css/member/MyInfo.css';
-import Footer from "../Footer.jsx";
+import {TextField, Button, Grid} from '@material-ui/core';
+import {makeStyles} from '@material-ui/core/styles';
+import CommonHeader from "../CommonHeader.jsx";
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        '& .MuiTextField-root': {
+            margin: theme.spacing(1),
+            width: '25ch',
+        },
+    },
+}));
+
+const links = [
+    {text: '뒤로가기'}, // 실제 경로로 교체해야 합니다.
+];
 
 function MyInfo() {
+    const classes = useStyles();
     const {user} = useContext(AuthContext);
 
     return (
-        <div className="MyInfo">
-            <form>
-                <label>
-                    Email:
-                    <input type="email" name="email" value={user.email} readOnly/>
-                </label>
-                <label>
-                    Name:
-                    <input type="text" name="name" value={user.name} readOnly/>
-                </label>
-                <label>
-                    Role:
-                    <input type="text" name="role" value={user.role} readOnly/>
-                </label>
-                <label>
-                    Phone:
-                    <input type="tel" name="phone" value={user.phone} readOnly/>
-                </label>
-                <label>
-                    City:
-                    <input type="text" name="city" value={user.city} readOnly/>
-                </label>
-                <label>
-                    Street:
-                    <input type="text" name="street" value={user.street} readOnly/>
-                </label>
-                <label>
-                    Zipcode:
-                    <input type="text" name="zipcode" value={user.zipcode} readOnly/>
-                </label>
-                <label>
-                    Social Login:
-                    <input type="text" name="socialLogin" value={user.socialLogin} readOnly/>
-                </label>
-                <div className="button-container">
-                    <Link to="/edit">
-                        <button type="button">수정</button>
-                    </Link>
-                    <Link to="/">
-                        <button type="button">돌아가기</button>
-                    </Link>
-                </div>
-                <Footer/>
+        <>
+            <CommonHeader links={links}/>
+            <form className={classes.root} noValidate autoComplete="off">
+                <Grid container direction="column" alignItems="center">
+                    <TextField label="Email" value={user.email} InputProps={{readOnly: true}}/>
+                    <TextField label="Name" value={user.name} InputProps={{readOnly: true}}/>
+                    <TextField label="Role" value={user.role} InputProps={{readOnly: true}}/>
+                    <TextField label="Phone" value={user.phone} InputProps={{readOnly: true}}/>
+                    <TextField label="주소" value={user.city} InputProps={{readOnly: true}}/>
+                    <TextField label="상세주소" value={user.street} InputProps={{readOnly: true}}/>
+                    <TextField label="우편번호" value={user.zipcode} InputProps={{readOnly: true}}/>
+                    <TextField label="Social Login" value={user.socialLogin} InputProps={{readOnly: true}}/>
+                    <Grid item>
+                        <Button variant="contained" color="primary" component={RouterLink} to="/edit">수정</Button>
+                    </Grid>
+                </Grid>
             </form>
-        </div>
+        </>
     );
 }
 

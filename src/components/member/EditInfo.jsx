@@ -6,11 +6,15 @@ import '../css/member/EditInfo.css';
 import Footer from "../Footer.jsx";
 import {updateMemberAPI} from "../api/UpdateMemberAPI.jsx";
 import axios from "axios";
+import {TextField, Button, Container, Box, Grid, Typography} from '@material-ui/core';
+import CommonHeader from "../CommonHeader.jsx";
 
 function EditInfo() {
     const {user, setUser} = useContext(AuthContext);
-    const [form, setForm] = useState({...user, currentPassword: '', password: '',
-    role: user.role});
+    const [form, setForm] = useState({
+        ...user, currentPassword: '', password: '',
+        role: user.role
+    });
     const navigate = useNavigate();
 
     const getUpdatedFields = (original, updated) => {
@@ -64,60 +68,59 @@ function EditInfo() {
     };
 
     return (
-        <div className="EditInfo">
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Email:
-                    <input type="email" name="email" value={form.email} readOnly/>
-                </label>
-                <label>
-                    Password:
-                    <input type="password" name="password" value={form.password} readOnly/>
-                    <Link to="/change-password">비밀번호 변경</Link>
-                </label>
-                <label>
-                    Name:
-                    <input type="text" name="name" value={form.name} readOnly/>
-                </label>
-                <label>
-                    Role:
-                    <input type="text" name="role" value={form.role} readOnly/>
-                </label>
-                <label>
-                    Phone:
-                    <input type="tel" name="phone" value={form.phone} onChange={handleChange}/>
-                </label>
-                <label>
-                    City:
-                    <input type="text" name="city" value={form.city} onChange={handleChange}/>
-                </label>
-                <label>
-                    Street:
-                    <input type="text" name="street" value={form.street} onChange={handleChange}/>
-                </label>
-                <label>
-                    Zipcode:
-                    <input type="text" name="zipcode" value={form.zipcode} onChange={handleChange}/>
-                </label>
-                <label>
-                    Social Login:
-                    <input type="text" name="socialLogin" value={form.socialLogin} readOnly
-                           onChange={handleChange}/>
-                </label>
-                <label>
-                    Current Password:
-                    <input type="password" name="currentPassword" value={form.currentPassword} onChange={handleChange}
-                           required/>
-                </label>
-                <div className="button-container">
-                    <button type="submit">확인</button>
-                    <Link to="/myinfo">
-                        <button type="button">돌아가기</button>
-                    </Link>
-                </div>
-                <Footer/>
-            </form>
-        </div>
+        <>
+            <CommonHeader links={[{text: '뒤로가기', path: '/myinfo'}]}/>
+            <Container style={{width: '15%'}} className="EditInfo">
+                <form onSubmit={handleSubmit}>
+                    <Grid container spacing={3}>
+                        <Grid item xs={12}>
+                            <TextField label="Email" type="email" name="email" value={form.email} fullWidth readOnly/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField label="Password" type="password" name="password" value={form.password} fullWidth
+                                       readOnly/>
+                            <Link to="/change-password">비밀번호 변경</Link>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField label="Name" type="text" name="name" value={form.name} fullWidth readOnly/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField label="Role" type="text" name="role" value={form.role} fullWidth readOnly/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField label="Phone" type="tel" name="phone" value={form.phone} fullWidth
+                                       onChange={handleChange}/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField label="주소" type="text" name="city" value={form.city} fullWidth
+                                       onChange={handleChange}/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField label="상세주소" type="text" name="street" value={form.street} fullWidth
+                                       onChange={handleChange}/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField label="우편번호" type="text" name="zipcode" value={form.zipcode} fullWidth
+                                       onChange={handleChange}/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField label="Social Login" type="text" name="socialLogin" value={form.socialLogin}
+                                       fullWidth readOnly={form.socialLogin === '' ? true : false} onChange={form.socialLogin !== '' ? handleChange : null}/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField label="Current Password" type="password" name="currentPassword"
+                                       value={form.currentPassword} fullWidth onChange={handleChange} required/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Box className="button-container" display="flex" justifyContent="center">
+                                <Button type="submit" variant="contained" color="primary">확인</Button>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                    <Footer/>
+                </form>
+            </Container>
+        </>
     );
 }
 

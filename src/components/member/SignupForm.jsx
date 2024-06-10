@@ -1,10 +1,10 @@
-// src/components/SignupForm.jsx
 import {useNavigate} from 'react-router-dom';
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import '../css/member/SignupForm.css';
 import {v4 as uuidv4} from 'uuid';
 import Footer from '../Footer.jsx';
+import {Container, TextField, Button, Box} from '@material-ui/core';
+import CommonHeader from "../CommonHeader.jsx";
 
 function SignupForm() {
     const navigate = useNavigate();
@@ -61,57 +61,33 @@ function SignupForm() {
         }
     };
 
+    const links = [
+        {text: '뒤로가기'}, // 실제 경로로 교체해야 합니다.
+    ];
+
     return (
-        <div className="SignupForm">
-            <form onSubmit={handleSubmit}>
-                <label>
-                    <span>
-                        Email:
-                        <input type="email" name="email" value={form.email} onChange={handleChange} required
+        <>
+            <CommonHeader links={links}/>
+            <Container style={{width: '20%', height: '0%', position: 'relative', top: '-100px'}}>
+                <form onSubmit={handleSubmit}>
+                    <TextField label="Email" type="email" name="email" value={form.email} onChange={handleChange}
+                               required
                                readOnly={isEmailReadOnly}/>
-                    </span>
-                </label>
-                <label>
-                    <span>
-                        Password:
-                        <input type="password" name="password" value={form.password} onChange={handleChange} required
+                    <TextField label="Password" type="password" name="password" value={form.password}
+                               onChange={handleChange} required
                                readOnly={isPasswordReadOnly}/>
-                    </span>
-                </label>
-                <label>
-                    <span>
-                        Name:
-                        <input type="text" name="name" value={form.name} onChange={handleChange} required/>
-                    </span>
-                </label>
-                <label>
-                    <span>
-                        Phone:
-                        <input type="tel" name="phone" value={form.phone} onChange={handleChange}/>
-                    </span>
-                </label>
-                <label>
-                    <span>
-                        City:
-                        <input type="text" name="city" value={form.city} onChange={handleChange}/>
-                    </span>
-                </label>
-                <label>
-                    <span>
-                        Street:
-                        <input type="text" name="street" value={form.street} onChange={handleChange}/>
-                    </span>
-                </label>
-                <label>
-                    <span>
-                        Zipcode:
-                        <input type="text" name="zipcode" value={form.zipcode} onChange={handleChange}/>
-                    </span>
-                </label>
-                <input type="submit" value="회원가입"/>
-            </form>
-            <Footer/>
-        </div>
+                    <TextField label="Name" type="text" name="name" value={form.name} onChange={handleChange} required/>
+                    <TextField label="Phone" type="tel" name="phone" value={form.phone} onChange={handleChange}/>
+                    <TextField label="주소" type="text" name="city" value={form.city} onChange={handleChange}/>
+                    <TextField label="상세주소" type="text" name="street" value={form.street} onChange={handleChange}/>
+                    <TextField label="우편번호" type="text" name="zipcode" value={form.zipcode} onChange={handleChange}/>
+                    <Box mt={2}>
+                        <Button style={{position: 'relative', top: '30px'}} type="submit" variant="contained" color="primary">회원가입</Button>
+                    </Box>
+                </form>
+                <Footer/>
+            </Container>
+        </>
     );
 }
 

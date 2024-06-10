@@ -5,7 +5,7 @@ export const getProductList = async (size = 10, page = 0, token) => {
     try {
         const response = await axios({
             method: 'get',
-            url: 'http://localhost:8080/productList',
+            url: 'http://localhost:8080/productlist',
             params: {
                 size,
                 page,

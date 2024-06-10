@@ -3,8 +3,23 @@ import React, {useContext, useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 import CommonHeader from "./CommonHeader.jsx";
-import './css/Main.css';
 import { AuthContext } from '../contexts/AuthContext.jsx';
+import { Button, Container, Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    loginSection: {
+        position: 'absolute',
+        top: theme.spacing(2),
+        right: theme.spacing(2),
+    },
+    loginButton: {
+        fontSize: 'large',
+    },
+    linkContainer: {
+        marginTop: theme.spacing(1),
+    },
+}));
 
 function Main() {
     const { user, setUser } = useContext(AuthContext);
@@ -19,6 +34,15 @@ function Main() {
         }
     };
 
+    const handleOrderCheckClick = () => {
+        if (!user) {
+            alert('로그인이 필요합니다.');
+            navigate('/login');
+        } else {
+            navigate('/orders');
+        }
+    };
+
     const handleLogout = () => {
         setUser(null); // 로그아웃 처리
         navigate('/'); // 홈으로 이동합니다.
@@ -26,9 +50,10 @@ function Main() {
 
     const links = [
         {text: '쇼핑하러가기', path: '/products'},
-        {text: '주문상품확인', path: '/orders'},
-        {text: '내 정보', onClick: handleMyInfoClick}
+        {text: '주문상품확인', onClick: handleOrderCheckClick},
+        {text: '내 정보', onClick: handleMyInfoClick},
     ];
+
 
     if (user && user.role === 'ADMIN') {
         links.push({text: '관리자 페이지', path: '/admin'});
@@ -37,20 +62,7 @@ function Main() {
 
     return (
         <div className="Main">
-            {/* eslint-disable-next-line no-undef */}
             <CommonHeader links={links}/>
-            <div className="login-section">
-                {user ? (
-                    <>
-                        <span>{user.name}님</span>
-                        <button onClick={handleLogout}>로그아웃</button>
-                    </>
-                ) : (
-                    <Link to="/login">
-                        <button>로그인</button>
-                    </Link>
-                )}
-            </div>
             <Footer/>
         </div>
     );

@@ -72,19 +72,19 @@ function KakaoSignupForm() {
                 </label>
                 <label>
                     <span>
-                        City:
+                        주소:
                         <input type="text" name="city" value={form.city} onChange={handleChange}/>
                     </span>
                 </label>
                 <label>
                     <span>
-                        Street:
+                        상세주소:
                         <input type="text" name="street" value={form.street} onChange={handleChange}/>
                     </span>
                 </label>
                 <label>
                     <span>
-                        Zipcode:
+                        우편번호:
                         <input type="text" name="zipcode" value={form.zipcode} onChange={handleChange}/>
                     </span>
                 </label>
