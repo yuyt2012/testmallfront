@@ -33,10 +33,15 @@ function Order() {
     const navigate = useNavigate();
     const [isSameInfo, setIsSameInfo] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState('');
+    const [deliveryMethod, setDeliveryMethod] = useState('');
+
     const handlePaymentMethodChange = (event) => {
         setPaymentMethod(event.target.value);
     };
 
+    const handleDeliveryMethodChange = (event) => {
+        setDeliveryMethod(event.target.value); // Update the delivery method when a radio button is selected
+    };
 
     const [ordererInfo, setOrdererInfo] = useState({
         name: '',
@@ -253,6 +258,12 @@ function Order() {
                     <FormControlLabel value="card" control={<Radio/>} label="카드"/>
                     <FormControlLabel value="bank" control={<Radio/>} label="무통장 입금"/>
                     <FormControlLabel value="kakao" control={<Radio/>} label="카카오페이"/>
+                </RadioGroup>
+
+                <h2>배송 방법</h2> {/* Add a section for the delivery method */}
+                <RadioGroup row onChange={handleDeliveryMethodChange}>
+                    <FormControlLabel value="pickup" control={<Radio/>} label="픽업"/>
+                    <FormControlLabel value="delivery" control={<Radio/>} label="택배"/>
                 </RadioGroup>
 
                 <Box display="flex" justifyContent="center" m={1} p={1}>
