@@ -17,6 +17,7 @@ import ProductContext from "../../contexts/ProductContext.jsx";
 import {getProduct} from "../api/ProductGetAPI.jsx";
 import {fetchImage} from '../api/ImageAPI.jsx';
 import CommonHeader from "../CommonHeader.jsx";
+import {saveOrder} from "../api/OrderAPI.jsx";
 
 function Order() {
     const {id} = useParams();
@@ -34,6 +35,8 @@ function Order() {
     const [isSameInfo, setIsSameInfo] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState('');
     const [deliveryMethod, setDeliveryMethod] = useState('');
+    const user = JSON.parse(localStorage.getItem('user')); // Parse the user object from local storage
+    const email = user?.email;
 
     const handlePaymentMethodChange = (event) => {
         setPaymentMethod(event.target.value);
@@ -44,11 +47,11 @@ function Order() {
     };
 
     const [ordererInfo, setOrdererInfo] = useState({
-        name: '',
-        phone: '',
-        address: '',
-        detailAddress: '',
-        postalCode: ''
+        name: user?.name || '',
+        phone: user?.phone || '',
+        address: user?.city || '',
+        detailAddress: user?.street || '',
+        postalCode: user?.zipcode || ''
     });
 
     const [receiverInfo, setReceiverInfo] = useState({
@@ -58,6 +61,8 @@ function Order() {
         detailAddress: '',
         postalCode: ''
     });
+
+
 
     const handleOrdererInfoChange = (event) => {
         setOrdererInfo({
@@ -94,7 +99,7 @@ function Order() {
         }
     };
 
-    const handleOrderClick = () => {
+    const handleOrderClick = async () => {
         if (!ordererInfo.name || !ordererInfo.phone || !ordererInfo.address || !ordererInfo.detailAddress || !receiverInfo.name || !receiverInfo.phone || !receiverInfo.address || !receiverInfo.detailAddress) {
             window.alert('모든 필드를 채워주세요.');
             return;
@@ -105,9 +110,47 @@ function Order() {
             return;
         }
 
+        if (!deliveryMethod) {
+            window.alert('배송 방식을 선택해주세요.');
+            return;
+        }
+
         const confirmOrder = window.confirm(`총 ${totalAmount}을 결제하시겠습니까?`);
         if (confirmOrder) {
-            // 주문을 진행하는 코드를 여기에 작성합니다.
+            // Create the orderDTO object
+            const orderProducts = products.map((product, index) => ({
+                productId: product.id,
+                productName: product.name,
+                price: product.price,
+                quantity: quantities[index]
+            }));
+
+            const delivery = {
+                receiverName: receiverInfo.name,
+                receiverPhone: receiverInfo.phone,
+                receiverCity: receiverInfo.address,
+                receiverStreet: receiverInfo.detailAddress,
+                receiverZipcode: receiverInfo.postalCode,
+                deliveryStatus: "READY"
+            };
+
+            const orderDTO = {
+                email,
+                paymentMethod,
+                shippingMethod: deliveryMethod,
+                orderProducts,
+                delivery
+            };
+
+            // Call the saveOrder function to send the orderDTO to the server
+            const result = await saveOrder(orderDTO, token);
+
+            if (result) {
+                window.alert('주문이 완료되었습니다.');
+                navigate('/orders');
+            } else {
+                window.alert('주문 실패. 다시 시도해주세요.');
+            }
         }
     };
 
