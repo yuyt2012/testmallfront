@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
-import {v4 as uuidv4} from 'uuid';
-import '../css/member/KakaoSignupForm.css';
 import axios from "axios";
-import Footer from "../Footer.jsx";
+import {TextField, Button, Container, Box} from '@material-ui/core';
+import CommonHeader from "../CommonHeader.jsx";
 
 function KakaoSignupForm() {
     const location = useLocation();
@@ -11,13 +10,9 @@ function KakaoSignupForm() {
     const queryParams = new URLSearchParams(location.search);
     const email = queryParams.get('email');
 
-    const generatePassword = () => {
-        return uuidv4().split('-').join('').substring(0, 10);
-    };
-
     const [form, setForm] = useState({
         email: email,
-        password: generatePassword(),
+        password: '',
         name: '',
         phone: '',
         city: '',
@@ -51,51 +46,37 @@ function KakaoSignupForm() {
         }
     };
 
+    const links = [
+        {text: '뒤로가기'}, // 실제 경로로 교체해야 합니다.
+    ];
+
     return (
-        <div className={'KakaoSignupForm'}>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Email:
-                    <input type="email" name="email" value={form.email} readOnly onChange={handleChange}/>
-                </label>
-                <label>
-                    Password:
-                    <input type="password" name="password" value={form.password} readOnly onChange={handleChange}/>
-                </label>
-                <label>
-                    Name:
-                    <input type="text" name="name" value={form.name} onChange={handleChange} required/>
-                </label>
-                <label>
-                    Phone:
-                    <input type="tel" name="phone" value={form.phone} onChange={handleChange}/>
-                </label>
-                <label>
-                    <span>
-                        주소:
-                        <input type="text" name="city" value={form.city} onChange={handleChange}/>
-                    </span>
-                </label>
-                <label>
-                    <span>
-                        상세주소:
-                        <input type="text" name="street" value={form.street} onChange={handleChange}/>
-                    </span>
-                </label>
-                <label>
-                    <span>
-                        우편번호:
-                        <input type="text" name="zipcode" value={form.zipcode} onChange={handleChange}/>
-                    </span>
-                </label>
-                <label>
-                    Social Login:
-                    <input type="text" name="socialLogin" value={form.socialLogin} readOnly onChange={handleChange}/>
-                </label>
-                <input type="submit" value="회원가입"/>
-            </form>
-            <Footer/>
-        </div>
+        <>
+            <CommonHeader links={links}/>
+            <Container style={{width: '20%', height: '0%', position: 'relative', top: '-90px', overflow: 'hidden'}}>
+                <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+                    <form onSubmit={handleSubmit}>
+                        <TextField label="Email" name="email" value={form.email} readOnly onChange={handleChange}
+                                   fullWidth margin="normal"/>
+                        <TextField label="Password" type="password" name="password" value={form.password}
+                                   onChange={handleChange} fullWidth margin="normal"/>
+                        <TextField label="Name" name="name" value={form.name} onChange={handleChange} required fullWidth
+                                   margin="normal"/>
+                        <TextField label="Phone" name="phone" value={form.phone} onChange={handleChange} fullWidth
+                                   margin="normal"/>
+                        <TextField label="주소" name="city" value={form.city} onChange={handleChange} fullWidth
+                                   margin="normal"/>
+                        <TextField label="상세주소" name="street" value={form.street} onChange={handleChange} fullWidth
+                                   margin="normal"/>
+                        <TextField label="우편번호" name="zipcode" value={form.zipcode} onChange={handleChange} fullWidth
+                                   margin="normal"/>
+                        <TextField label="Social Login" name="socialLogin" value={form.socialLogin} readOnly
+                                   fullWidth margin="normal"/>
+                        <Button type="submit" variant="contained" color="primary" fullWidth>회원가입</Button>
+                    </form>
+                </Box>
+            </Container>
+        </>
     );
 }
 

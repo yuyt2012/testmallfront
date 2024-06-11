@@ -16,8 +16,10 @@ function CommonHeader({links}) {
     }
 
     const handleLogout = () => {
-        setUser(null); // 로그아웃 처리
-        navigate('/'); // 홈으로 이동합니다.
+        if (window.confirm('로그아웃 하시겠습니까?')) {
+            setUser(null); // 로그아웃 처리
+            navigate('/'); // 홈으로 이동합니다.
+        }
     };
 
     return (

@@ -1,9 +1,9 @@
 // ProductDisplay.jsx
 import React, {useState, useEffect} from "react";
 import {findAll} from "../api/ProductGetAPI.jsx";
-import { fetchImage } from "../api/ImageAPI.jsx";
-import { Card, CardMedia, CardContent, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import {fetchImage} from "../api/ImageAPI.jsx";
+import {Card, CardMedia, CardContent, Typography} from '@material-ui/core';
+import {makeStyles} from '@material-ui/core/styles';
 import '../css/product/ProductDisplay.css';
 import {useNavigate} from "react-router-dom";
 

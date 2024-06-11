@@ -22,6 +22,7 @@ import './styles/global.css';
 import ProductDetailContainer from "./components/product/ProductDetailContainer.jsx";
 import Cart from "./components/cart/Cart.jsx";
 import Order from "./components/order/Order.jsx";
+import AdminRoute from "./components/AdminRoute.jsx";
 
 function App() {
     return (

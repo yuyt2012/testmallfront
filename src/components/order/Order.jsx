@@ -137,9 +137,7 @@ function Order() {
         fetchProduct();
     }, [id, token, contextProducts, contextQuantities]);
 
-    const links = [
-        {text: '뒤로가기'}, // 실제 경로로 교체해야 합니다.
-    ];
+    const links = [];
 
     function getProductName(product) {
         return product.productName != null ? product.productName : product.name;
@@ -148,8 +146,7 @@ function Order() {
     if (products.length > 0) {
         return (
             <div>
-                <CommonHeader links={links}/>
-
+                <CommonHeader links={links} className="order-page-header"/>
                 <h2>상품 정보</h2>
                 <TableContainer component={Paper}>
                     <Table>
@@ -159,6 +156,7 @@ function Order() {
                                 <TableCell align="center">상품 이미지</TableCell>
                                 <TableCell align="center">상품 이름</TableCell>
                                 <TableCell align="center">구매 수량</TableCell>
+                                <TableCell align="center">제품 가격</TableCell>
                                 <TableCell align="center">총 가격</TableCell>
                             </TableRow>
                         </TableHead>
@@ -171,13 +169,14 @@ function Order() {
                                     </TableCell>
                                     <TableCell align="center">{product && getProductName(product)}</TableCell>
                                     <TableCell align="center">{quantities[index]}</TableCell>
+                                    <TableCell align="center">{product.price}</TableCell>
                                     <TableCell align="center">{product.price * quantities[index]}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
                         <TableFooter>
                             <TableRow>
-                                <TableCell colSpan={4} align="right">
+                                <TableCell colSpan={5} align="right">
                                     <Typography variant="h6">결제 예정 금액:</Typography>
                                 </TableCell>
                                 <TableCell align="center">

@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 import CommonHeader from "./CommonHeader.jsx";
 import { AuthContext } from '../contexts/AuthContext.jsx';
-import { Button, Container, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -51,6 +50,7 @@ function Main() {
     const links = [
         {text: '쇼핑하러가기', path: '/products'},
         {text: '주문상품확인', onClick: handleOrderCheckClick},
+        {text: '게시판', path: '/posts'},
         {text: '내 정보', onClick: handleMyInfoClick},
     ];
 

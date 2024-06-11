@@ -104,8 +104,8 @@ function EditInfo() {
                                        onChange={handleChange}/>
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField label="Social Login" type="text" name="socialLogin" value={form.socialLogin}
-                                       fullWidth readOnly={form.socialLogin === '' ? true : false} onChange={form.socialLogin !== '' ? handleChange : null}/>
+                            <TextField label="Social Login" name="socialLogin" value={form.socialLogin} readOnly
+                                       fullWidth margin="normal"/>
                         </Grid>
                         <Grid item xs={12}>
                             <TextField label="Current Password" type="password" name="currentPassword"

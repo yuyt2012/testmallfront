@@ -3,7 +3,7 @@
     display: flex;
     justify-content: flex-end;
     padding: 10px 0;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #000000;
 }
 
 .Header nav ul {
@@ -22,4 +22,8 @@
     padding-left: 30px;
     height: 70px; /* 로고의 높이를 설정합니다. */
     cursor: pointer; /* 마우스 커서를 포인터로 변경하여 클릭 가능함을 나타냅니다. */
+}
+
+.order-page-header {
+    height: 70px; /* 원하는 높이로 설정합니다. */
 }
