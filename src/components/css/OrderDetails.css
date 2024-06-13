@@ -1,0 +1,19 @@
+/* src/components/order/OrderDetails.css */
+.order-details-table {
+    width: 80%;
+    margin: auto;
+    border-collapse: collapse;
+}
+
+.order-details-table th, .order-details-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.order-details-table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+}

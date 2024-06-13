@@ -85,7 +85,7 @@ function Cart() {
     const handleHeaderCheckboxClick = (event) => {
         if (event.target.checked) {
             // 모든 아이템 선택
-            setCheckedProducts(cartProduct.map(item => item.productName));
+            setCheckedProducts(cartProduct.map(item => item.name));
         } else {
             // 모든 아이템 선택 해제
             setCheckedProducts([]);
@@ -93,29 +93,48 @@ function Cart() {
     };
 
     // 아이템의 체크박스 클릭 핸들러
-    const handleItemCheckboxClick = (event, productName) => {
+    const handleItemCheckboxClick = (event, name) => {
         if (event.target.checked) {
             // 아이템 선택
-            setCheckedProducts(prev => [...prev, productName]);
+            setCheckedProducts(prev => [...prev, name]);
         } else {
             // 아이템 선택 해제
-            setCheckedProducts(prev => prev.filter(name => name !== productName));
+            setCheckedProducts(prev => prev.filter(name => name !== name));
         }
     };
 
-    const handleOrderClick = () => {
+    const handleOrderClick = async () => {
         if (checkedProducts.length === 0) {
             // 선택된 제품이 없다면 경고 메시지를 표시합니다.
             alert('상품이 선택되지 않았습니다.');
         } else {
             // 체크된 항목을 주문 처리합니다.
-            const checkedItems = cartProduct.filter(product => checkedProducts.includes(product.productName));
+            const checkedItems = cartProduct.filter(product => checkedProducts.includes(product.name));
             const checkedQuantities = checkedItems.map(item => item.quantity); // Get the quantities of the checked items
 
             setOrderProducts(checkedItems); // Save the checked items to the context
             setOrderQuantities(checkedQuantities); // Save the quantities of the checked items to the context
 
             navigate('/order/cart'); // Navigate to the order page
+
+            // 주문이 완료되면 장바구니를 비웁니다.
+            for (const productName of checkedProducts) {
+                const product = cartProduct.find(product => product.name === productName);
+                if (product) {
+                    try {
+                        await deleteCartProduct(productName, user.email, token);
+                        console.log('Deleted:', productName);
+                        console.log('user.email:', user.email);
+                    } catch (error) {
+                        console.error('Failed to delete:', productName, error);
+                    }
+                }
+                console.log('Deleting items:', checkedProducts);
+            }
+
+            const updatedCartProducts = await cartProducts(10, 0, token, email);
+            setCartProduct(updatedCartProducts.content || []);
+            setCheckedProducts([]);
         }
     };
 
@@ -128,7 +147,7 @@ function Cart() {
             const confirmDelete = window.confirm('상품을 삭제하시겠습니까?');
             if (confirmDelete) {
                 for (const productName of checkedProducts) {
-                    const product = cartProduct.find(product => product.productName === productName);
+                    const product = cartProduct.find(product => product.name === productName);
                     if (product) {
                         try {
                             await deleteCartProduct(productName, user.email, token);
@@ -148,7 +167,7 @@ function Cart() {
     };
 
     const links = [
-        {text: '주문상품확인', path: '/orders'},
+        {text: '주문상품확인', path: '/order/list'},
         {text: '내 정보', path: '/myinfo'},
         {text: '뒤로가기'}, // 실제 경로로 교체해야 합니다.
     ];
@@ -178,16 +197,16 @@ function Cart() {
                     </TableHead>
                     <TableBody>
                         {cartProduct.map((product) => (
-                            <TableRow key={product.productName}>
+                            <TableRow key={product.name}>
                                 <TableCell align="center">
                                     <Checkbox
-                                        checked={checkedProducts.includes(product.productName)}
-                                        onChange={(event) => handleItemCheckboxClick(event, product.productName)}
+                                        checked={checkedProducts.includes(product.name)}
+                                        onChange={(event) => handleItemCheckboxClick(event, product.name)}
                                     />
                                 </TableCell>
                                 <TableCell align="center"><Avatar src={product.image}
                                                                   className={classes.avatar}/></TableCell>
-                                <TableCell align="center">{product.productName}</TableCell>
+                                <TableCell align="center">{product.name}</TableCell>
                                 <TableCell align="center">{product.quantity}</TableCell>
                                 <TableCell align="center">{product.price}</TableCell>
                                 <TableCell align="center">{product.price * product.quantity}</TableCell>

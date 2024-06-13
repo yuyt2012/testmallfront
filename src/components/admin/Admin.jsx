@@ -8,6 +8,7 @@ const AdminPage = () => {
         {text: '회원관리', path: '/admin/users'},
         {text: '상품관리', path: '/admin/products'},
         {text: '게시판관리', path: '/admin/post'},
+        {text: '주문관리', path: '/admin/orders'},
         {text: '뒤로가기' }, // 실제 경로로 교체해야 합니다.
 
     ];

@@ -33,7 +33,7 @@ const LoginForm = () => {
     return (
         <>
             <CommonHeader links={links}/>
-            <Container style={{width: '20%', height: '0%', position: 'relative', top: '-200px', overflow: 'hidden'}}>
+            <Container style={{width: '20%', height: '0%', position: 'relative', top: '200px'}}>
                 <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
                     <form onSubmit={handleSubmit}>
                         <TextField label="Email" type="email" name="email" fullWidth margin="normal" required />
@@ -41,13 +41,13 @@ const LoginForm = () => {
                         <Button type="submit" variant="contained" color="primary" fullWidth>로그인</Button>
                     </form>
                     <Box mt={0}>
-                        <Button style={{position: 'relative', top: '-200px'}} onClick={handleKakaoLogin} variant="contained" fullWidth>
+                        <Button style={{position: 'relative', top: '200px'}} onClick={handleKakaoLogin} variant="contained" fullWidth>
                             <img src={kakaoLoginImage} alt="카카오로 로그인"/>
                         </Button>
                     </Box>
                     <Box mt={2}>
                         <Link to="/signup">
-                            <Button style={{position: 'relative', top: '-200px'}} variant="contained" color="secondary" fullWidth>회원가입</Button>
+                            <Button style={{position: 'relative', top: '200px'}} variant="contained" color="secondary" fullWidth>회원가입</Button>
                         </Link>
                     </Box>
                 </Box>

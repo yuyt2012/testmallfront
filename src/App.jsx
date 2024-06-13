@@ -23,6 +23,8 @@ import ProductDetailContainer from "./components/product/ProductDetailContainer.
 import Cart from "./components/cart/Cart.jsx";
 import Order from "./components/order/Order.jsx";
 import AdminRoute from "./components/AdminRoute.jsx";
+import OrderList from "./components/order/OrderList.jsx";
+import OrderDetails from "./components/order/OrderDetails.jsx";
 
 function App() {
     return (
@@ -49,6 +51,8 @@ function App() {
                         <Route path="/admin/product-register/category-add" element={<CategoryAddForm/>}/>
                         <Route path="/order/cart" element={<Order/>}/>
                         <Route path="/order/product/:id" element={<Order/>}/>
+                        <Route path="/order/list" element={<OrderList/>}/>
+                        <Route path="/order/details/:orderId" element={<OrderDetails />} />
                     </Routes>
                     <Footer/>
                 </Router>

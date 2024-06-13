@@ -38,7 +38,7 @@ function Main() {
             alert('로그인이 필요합니다.');
             navigate('/login');
         } else {
-            navigate('/orders');
+            navigate('/order/list');
         }
     };
 

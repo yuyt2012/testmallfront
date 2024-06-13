@@ -68,7 +68,7 @@ function SignupForm() {
     return (
         <>
             <CommonHeader links={links}/>
-            <Container style={{width: '20%', height: '0%', position: 'relative', top: '-100px'}}>
+            <Container style={{width: '20%', height: '0%', position: 'absolute', top: '250px', left: '40%'}}>
                 <form onSubmit={handleSubmit}>
                     <TextField label="Email" type="email" name="email" value={form.email} onChange={handleChange}
                                required

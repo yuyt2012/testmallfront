@@ -23,7 +23,6 @@ function Order() {
     const {id} = useParams();
     const location = useLocation();
     const {
-        orderProduct,
         orderProducts: contextProducts = [],
         orderQuantities: contextQuantities = []
     } = useContext(ProductContext); // Get multiple products and their quantities from the context
@@ -124,6 +123,7 @@ function Order() {
                 price: product.price,
                 quantity: quantities[index]
             }));
+            console.log(orderProducts);
 
             const delivery = {
                 receiverName: receiverInfo.name,
@@ -147,7 +147,7 @@ function Order() {
 
             if (result) {
                 window.alert('주문이 완료되었습니다.');
-                navigate('/orders');
+                navigate('/products');
             } else {
                 window.alert('주문 실패. 다시 시도해주세요.');
             }

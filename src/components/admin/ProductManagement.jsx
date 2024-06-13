@@ -89,7 +89,7 @@ const ProductManagement = () => {
                                     <TableCell align="center">{product.name}</TableCell>
                                     <TableCell align="center">{product.price}</TableCell>
                                     <TableCell align="center">{product.stockQuantity}</TableCell>
-                                    <TableCell align="center">{product.isSoldOut ? 'Yes' : 'No'}</TableCell>
+                                    <TableCell align="center">{product.soldOut ? "품절" : "재고 있음"}</TableCell>
                                     <TableCell align="center">{product.parentCategoryName}</TableCell>
                                     <TableCell align="center">{product.subCategoryNames.join(', ')}</TableCell>
                                     <TableCell align="center">{product.description}</TableCell>

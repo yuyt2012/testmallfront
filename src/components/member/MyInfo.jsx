@@ -26,7 +26,7 @@ function MyInfo() {
         <>
             <CommonHeader links={links}/>
             <form className={classes.root} noValidate autoComplete="off">
-                <Grid container direction="column" alignItems="center">
+                <Grid style={{position: 'relative', top: '80px'}} container direction="column" alignItems="center">
                     <TextField label="Email" value={user.email} InputProps={{readOnly: true}}/>
                     <TextField label="Name" value={user.name} InputProps={{readOnly: true}}/>
                     <TextField label="Role" value={user.role} InputProps={{readOnly: true}}/>

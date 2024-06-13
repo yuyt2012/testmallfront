@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import '../css/admin/CategoryRegister.css';
+import { Button, TextField, Container, Box } from '@material-ui/core';
 import {createCategoryWithSubCategories} from "../api/CategoryRegisterAPI.jsx";
 
 function CategoryForm() {
@@ -32,28 +32,16 @@ function CategoryForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div className="form-title">
-                <div className="form-group">
-                    <label>
-                        Parent Category:&nbsp;
-                        <input type="text" value={name} onChange={(e) => setName(e.target.value)}/>
-                    </label>
-                </div>
-                <div className="form-group">
-                    <label>
-                        Sub Category:&nbsp;
-                        <input type="text" value={subCategory} onChange={(e) => setSubCategory(e.target.value)}/>
-                    </label>
-                </div>
-                <div className="form-group">
-                    <input type="submit" value="Add Category"/>
-                </div>
-                <div className="form-group">
-                    <button onClick={handleBack}>뒤로 가기</button>
-                </div>
-            </div>
-        </form>
+        <Container style={{position: 'relative', top:'200px'}} maxWidth="sm">
+            <Box my={4}>
+                <form onSubmit={handleSubmit}>
+                    <TextField label="Parent Category" value={name} onChange={(e) => setName(e.target.value)} fullWidth/>
+                    <TextField label="Sub Category" value={subCategory} onChange={(e) => setSubCategory(e.target.value)} fullWidth/>
+                    <Button style={{position: 'relative', top: '20px', left: '290px'}} variant="contained" color="primary" type="submit">Add Category</Button>
+                    <Button style={{position: 'relative',left: '310px', top: '20px'}} variant="contained" color="secondary" onClick={handleBack}>뒤로 가기</Button>
+                </form>
+            </Box>
+        </Container>
     );
 }
 

@@ -70,7 +70,7 @@ function EditInfo() {
     return (
         <>
             <CommonHeader links={[{text: '뒤로가기', path: '/myinfo'}]}/>
-            <Container style={{width: '15%'}} className="EditInfo">
+            <Container style={{width: '15%', position:'relative', top: '50px'}} className="EditInfo">
                 <form onSubmit={handleSubmit}>
                     <Grid container spacing={3}>
                         <Grid item xs={12}>

@@ -1,9 +1,10 @@
 // src/components/admin/ProductRegister.jsx
 import React, {useState, useEffect} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
-import '../css/product/ProductRegister.css';
 import {getCategories} from '../api/CategoryRegisterAPI.jsx';
 import {saveProduct} from '../api/ProductSaveAPI.jsx';
+import {TextField, Button, FormControl, InputLabel, Select, MenuItem, Container, Box} from '@material-ui/core';
+import CommonHeader from "../CommonHeader.jsx";
 
 const ProductRegister = () => {
     const [name, setName] = useState('');
@@ -63,7 +64,7 @@ const ProductRegister = () => {
         };
 
         const json = JSON.stringify(productDTO);
-        const blob = new Blob([json], { type: "application/json" }); // Convert JSON string to Blob
+        const blob = new Blob([json], {type: "application/json"}); // Convert JSON string to Blob
 
         const formData = new FormData(); // Use FormData to send the file
         formData.append('productDTO', blob); // Add the Blob to formData
@@ -82,61 +83,67 @@ const ProductRegister = () => {
         navigate(-1);
     };
 
+    const links = [
+        {text: '뒤로가기'}, // 실제 경로로 교체해야 합니다.
+    ];
+
     return (
-        <div className="product-register">
-            <h1>상품 등록 페이지</h1>
-            <Link to="/admin/product-register/category-add" className="admin-button">카테고리 등록</Link>
-            <form className="product-form" onSubmit={handleSubmit}>
-                <label>
-                    Name:
-                    <input type="text" value={name} onChange={(e) => setName(e.target.value)}/>
-                </label>
-                <label>
-                    Price:
-                    <input type="number" min="0" step="100" value={price} onChange={(e) => setPrice(e.target.value)}/>
-                </label>
-                <label>
-                    Stock Quantity:
-                    <input type="number" min="0" value={stockQuantity}
-                           onChange={(e) => setStockQuantity(e.target.value)}/>
-                </label>
-                <label>
-                    Parent Category:
-                    <select value={parentCategory} onChange={handleParentCategoryChange}>
-                        {categories.map((category) => (
-                            <option key={category.id} value={category.name}>{category.name}</option>
-                        ))}
-                    </select>
-                </label>
-                <label>
-                    Child Category:
-                    <select value={childCategory && childCategory.name}
-                            onChange={(e) => {
-                                const selectedCategory = childCategories.find(category => category.name === e.target.value);
-                                console.log(selectedCategory);
-                                setChildCategory(selectedCategory || {});
-                            }}>
-                        <option value="" disabled selected>---선택하세요---</option>
-                        {childCategories.map((category) => (
-                            <option key={category.id} value={category.name}>{category.name}</option>
-                        ))}
-                    </select>
-                </label>
-                <label>
-                    Description:
-                    <textarea value={description} onChange={(e) => setDescription(e.target.value)}/>
-                </label>
-                <label>
-                    Image:
-                    <input type="text" value={imagePath} readOnly/> {/* Add text input for the image path */}
-                    <input type="file" onChange={handleFileChange}/> {/* Add file input */}
-                </label>
-                <div className="button-group">
-                    <button onClick={handleBack} className="button">뒤로 가기</button>
-                    <input type="submit" value="Submit" className="button"/>
-                </div>
-            </form>
-        </div>
+        <>
+            <CommonHeader links={links}/>
+            <Container style={{position: 'relative', top: '-120px'}} maxWidth="sm">
+                <Box my={4}>
+                    <div className="product-register">
+                        <Button style={{position: 'relative', top: '200px', left: '430px'}} variant="contained" color="primary"
+                                component={Link}
+                                to="/admin/product-register/category-add">
+                            카테고리 등록
+                        </Button>
+                        <form style={{position: 'relative', top:'250px'}} className="product-form" onSubmit={handleSubmit}>
+                            <TextField label="Name" value={name} onChange={(e) => setName(e.target.value)} fullWidth/>
+                            <TextField label="Price" type="number" value={price}
+                                       onChange={(e) => setPrice(e.target.value)}
+                                       fullWidth/>
+                            <TextField label="Stock Quantity" type="number" value={stockQuantity}
+                                       onChange={(e) => setStockQuantity(e.target.value)} fullWidth/>
+                            <FormControl fullWidth>
+                                <InputLabel>Parent Category</InputLabel>
+                                <Select value={parentCategory} onChange={handleParentCategoryChange}>
+                                    {categories.map((category) => (
+                                        <MenuItem key={category.id} value={category.name}>{category.name}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            <FormControl fullWidth>
+                                <InputLabel>Child Category</InputLabel>
+                                <Select
+                                    value={childCategory && childCategory.name}
+                                    onChange={(e) => {
+                                        const selectedCategory = childCategories.find(category => category.name === e.target.value);
+                                        setChildCategory(selectedCategory || {});
+                                    }}
+                                >
+                                    <MenuItem value="" disabled>---선택하세요---</MenuItem>
+                                    {childCategories.map((category) => (
+                                        <MenuItem key={category.id} value={category.name}>{category.name}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            <TextField label="Description" multiline value={description}
+                                       onChange={(e) => setDescription(e.target.value)} fullWidth/>
+                            <TextField label="Image" type="file" InputLabelProps={{shrink: true}}
+                                       onChange={handleFileChange}
+                                       fullWidth/>
+                            <div className="button-group">
+                                <Button style={{position: 'relative', left: '350px', top: '20px'}} variant="contained"
+                                        color="primary" onClick={handleBack}>뒤로 가기</Button>
+                                <Button style={{position: 'relative', left: '370px',top: '20px'}} variant="contained" color="primary"
+                                        type="submit">Submit</Button>
+                            </div>
+                        </form>
+                    </div>
+                </Box>
+            </Container>
+        </>
     );
 };
 
