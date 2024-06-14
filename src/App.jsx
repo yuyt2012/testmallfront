@@ -25,6 +25,9 @@ import Order from "./components/order/Order.jsx";
 import AdminRoute from "./components/AdminRoute.jsx";
 import OrderList from "./components/order/OrderList.jsx";
 import OrderDetails from "./components/order/OrderDetails.jsx";
+import Board from "./components/board/Board.jsx";
+import RegisterPost from "./components/board/RegisterPost.jsx";
+import Post from "./components/board/Post.jsx";
 
 function App() {
     return (
@@ -52,7 +55,10 @@ function App() {
                         <Route path="/order/cart" element={<Order/>}/>
                         <Route path="/order/product/:id" element={<Order/>}/>
                         <Route path="/order/list" element={<OrderList/>}/>
-                        <Route path="/order/details/:orderId" element={<OrderDetails />} />
+                        <Route path="/order/details/:orderId" element={<OrderDetails/>}/>
+                        <Route path="/board" element={<Board/>}/>
+                        <Route path="/board/post/register" element={<RegisterPost/>}/>
+                        <Route path="/board/post/:id" element={<Post/>}/>
                     </Routes>
                     <Footer/>
                 </Router>

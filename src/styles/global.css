@@ -3,8 +3,6 @@
 body {
     background-color: lavender; /* 연보라색 */
     /* 기존 스타일들 */
-}
-
-body {
     padding-bottom: 100px; /* Adjust this value to match your footer's height */
+    overflow-x: hidden;
 }

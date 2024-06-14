@@ -50,7 +50,7 @@ function Main() {
     const links = [
         {text: '쇼핑하러가기', path: '/products'},
         {text: '주문상품확인', onClick: handleOrderCheckClick},
-        {text: '게시판', path: '/posts'},
+        {text: '게시판', path: '/board'},
         {text: '내 정보', onClick: handleMyInfoClick},
     ];
 
