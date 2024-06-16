@@ -1,4 +1,3 @@
-// Board.jsx
 import React, {useState, useEffect} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {
@@ -31,16 +30,18 @@ const Board = () => {
     const navigate = useNavigate();
     const sortedPosts = [...posts].sort((a, b) => new Date(b.regDate) - new Date(a.regDate));
     const token = localStorage.getItem('token');
-    const [page, setPage] = useState(0); // Add a state variable for the current page
+    const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
+    const size = 10;
+    const [totalPosts, setTotalPosts] = useState(0); // Add a state variable for the total number of posts
 
-    // Fetch posts from API
     useEffect(() => {
         const fetchPosts = async () => {
-            const posts = await getPostList(10, page, token); // Call the getPostList function
+            const posts = await getPostList(size, page, token);
             console.log(posts);
-            setPosts(posts.content);
+            setPosts(posts.content.reverse());
             setTotalPages(posts.totalPages);
+            setTotalPosts(posts.totalElements);
         };
 
         fetchPosts();
@@ -60,14 +61,14 @@ const Board = () => {
     }
 
     const handleNextPageClick = () => {
-        if (page < totalPages - 1) { // Check if there are more pages
-            setPage(page + 1); // Go to the next page
+        if (page < totalPages - 1) {
+            setPage(page + 1);
         }
     }
 
     const handlePrevPageClick = () => {
-        if (page > 0) { // Check if there are previous pages
-            setPage(page - 1); // Go to the previous page
+        if (page > 0) {
+            setPage(page - 1);
         }
     }
 
@@ -92,7 +93,7 @@ const Board = () => {
                         <Table className={classes.table} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell style={{width: '10%'}} align={"center"}>ID</TableCell>
+                                    <TableCell style={{width: '10%'}} align={"center"}>번호</TableCell>
                                     <TableCell style={{width: '60%'}} align={"center"}>제목</TableCell>
                                     <TableCell style={{width: '15%'}} align={"center"}>글쓴이</TableCell>
                                     <TableCell style={{width: '15%'}} align={"center"}>등록일</TableCell>
@@ -100,11 +101,11 @@ const Board = () => {
                             </TableHead>
                             <TableBody>
                                 {filteredPosts.length > 0 ? (
-                                    filteredPosts.map((post) => (
+                                    filteredPosts.map((post, index) => (
                                         <TableRow key={post.id}>
                                             <TableCell style={{width: '10%'}} align={"center"} component="th"
                                                        scope="row">
-                                                {post.id}
+                                                {totalPosts - (index + page * size)}
                                             </TableCell>
                                             <TableCell style={{width: '60%'}} align={"center"}>
                                                 <Link to={`/board/post/${post.id}`}>{post.title}</Link>

@@ -6,7 +6,6 @@ import ContentInput from "./postcomponents/ContentInput.jsx";
 import PasswordInput from "./postcomponents/PasswordInput.jsx";
 import {useNavigate} from "react-router-dom";
 import {registerPost} from "../api/BoardAPI.jsx";
-import {HttpStatusCode} from "axios";
 
 const PostForm = () => {
     const [title, setTitle] = useState('');
@@ -49,7 +48,7 @@ const PostForm = () => {
     return (
         <>
             <CommonHeader links={links}/>
-            <Container style={{position: 'relative', top: '65px'}}>
+            <Container style={{position: 'relative', top: '65px', minHeight: '100vh'}}>
                 <Paper style={{
                     position: 'relative',
                     top: '10px',
