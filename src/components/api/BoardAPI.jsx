@@ -52,3 +52,37 @@ export async function getPost(postId, token) {
         return null;
     }
 }
+
+export async function deletePost(postId, password, token) {
+    try {
+        const response = await axios({
+            method: 'delete',
+            url: `http://localhost:8080/deletepost/${postId}`,
+            data: password,
+            headers: {
+                'Authorization': `${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+export async function registerComment(commentDTO, token) {
+    try {
+        const response = await axios({
+            method: 'post',
+            url: "http://localhost:8080/registercomment",
+            data: commentDTO,
+            headers: {
+                'Authorization': `${token}`
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}

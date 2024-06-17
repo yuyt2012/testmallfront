@@ -3,6 +3,7 @@ import {Link, useNavigate} from 'react-router-dom';
 import './css/CommonHeader.css'
 import {Button} from "@material-ui/core";
 import logo from '../assets/logo.png';
+import logo2 from '../assets/logo2.jpg';
 import { AuthContext } from '../contexts/AuthContext.jsx';
 import { Grid } from '@material-ui/core';
 
