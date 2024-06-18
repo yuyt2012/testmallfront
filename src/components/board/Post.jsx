@@ -2,28 +2,25 @@ import React, {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import {getPost} from '../api/BoardAPI.jsx';
 import {
-    Table,
-    TableBody,
-    TableRow,
-    Paper,
-    Typography,
-    Container,
-    Grid,
-    TextField,
-    Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle
+    Table, TableBody, TableRow, Paper,
+    Typography, Container, Grid, TextField,
+    Button, Dialog, DialogActions, DialogContent,
+    DialogContentText, DialogTitle
 } from '@material-ui/core';
 import CommonHeader from "../CommonHeader.jsx";
 import {deletePost} from "../api/BoardAPI.jsx";
+import {registerComment} from "../api/BoardAPI.jsx";
 
 
 const Post = () => {
     const {id} = useParams();
     const [post, setPost] = useState(null);
     const [comments, setComments] = useState([]);
-    const [newComment, setNewComment] = useState('');
     const token = localStorage.getItem('token');
     const [open, setOpen] = useState(false);
     const [password, setPassword] = useState('');
+    const [commentContent, setCommentContent] = useState('');
+    const user = JSON.parse(localStorage.getItem('user'));
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -35,12 +32,30 @@ const Post = () => {
     }, [id]);
 
     const handleCommentChange = (event) => {
-        setNewComment(event.target.value);
+        setCommentContent(event.target.value);
     };
 
-    const handleCommentSubmit = () => {
-        setComments([...comments, newComment]);
-        setNewComment('');
+    const handleCommentSubmit = async () => {
+        if (commentContent) {
+            const commentDTO = {
+                email: user.email,
+                postId: post.id,
+                writer: user.name,
+                content: commentContent
+            };
+
+            const response = await registerComment(commentDTO, token);
+
+            console.log('response:', response);
+
+
+            if (response === 'success') {
+                setComments([...comments, commentContent]);
+                setCommentContent('');
+            } else {
+                alert('댓글 등록에 실패했습니다.');
+            }
+        }
     };
 
     const handleClickOpen = () => {
@@ -120,7 +135,7 @@ const Post = () => {
                             <div>
                                 <TextField style={{paddingBlock: '20px'}}
                                            label="New Comment"
-                                           value={newComment}
+                                           value={commentContent}
                                            onChange={handleCommentChange}
                                 />
                                 <Button style={{paddingBlock: '30px'}} onClick={handleCommentSubmit}>Submit</Button>
