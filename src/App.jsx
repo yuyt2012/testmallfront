@@ -28,6 +28,8 @@ import OrderDetails from "./components/order/OrderDetails.jsx";
 import Board from "./components/board/Board.jsx";
 import RegisterPost from "./components/board/RegisterPost.jsx";
 import Post from "./components/board/Post.jsx";
+import UpdatePost from "./components/board/UpdatePost.jsx";
+import OrdersManagement from "./components/admin/OrdersManagement.jsx";
 
 function App() {
     return (
@@ -49,6 +51,7 @@ function App() {
                         <Route path="/admin" element={<Admin/>}/>
                         <Route path="/admin/post" element={<PostManagement/>}/>
                         <Route path="/admin/products" element={<ProductManagement/>}/>
+                        <Route path="/admin/orders" element={<OrdersManagement/>}/>
                         <Route path="/admin/users" element={<UserManagement/>}/>
                         <Route path="/admin/product-register" element={<ProductRegister/>}/>
                         <Route path="/admin/product-register/category-add" element={<CategoryAddForm/>}/>
@@ -59,6 +62,8 @@ function App() {
                         <Route path="/board" element={<Board/>}/>
                         <Route path="/board/post/register" element={<RegisterPost/>}/>
                         <Route path="/board/post/:id" element={<Post/>}/>
+                        <Route path="/updatepost" element={<UpdatePost/>}/>
+                        <Route path="/updatepost/:id" element={<UpdatePost/>}/>
                     </Routes>
                     <Footer/>
                 </Router>

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import {useParams, Link} from 'react-router-dom';
 import {getPost} from '../api/BoardAPI.jsx';
 import {
     Table, TableBody, TableRow, Paper,
@@ -10,17 +10,19 @@ import {
 import CommonHeader from "../CommonHeader.jsx";
 import {deletePost} from "../api/BoardAPI.jsx";
 import {registerComment} from "../api/BoardAPI.jsx";
-
+import {getCommentList} from "../api/BoardAPI.jsx";
 
 const Post = () => {
     const {id} = useParams();
     const [post, setPost] = useState(null);
-    const [comments, setComments] = useState([]);
+    const [comments, setComments] = useState({content: []});
     const token = localStorage.getItem('token');
     const [open, setOpen] = useState(false);
     const [password, setPassword] = useState('');
     const [commentContent, setCommentContent] = useState('');
     const user = JSON.parse(localStorage.getItem('user'));
+    const size = 10;
+    const [page, setPage] = useState(0);
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -30,6 +32,16 @@ const Post = () => {
 
         fetchPost();
     }, [id]);
+
+    useEffect(() => {
+        const fetchComments = async () => {
+            const commnetList = await getCommentList(size, page, id, token);
+            setComments(commnetList);
+        };
+        fetchComments();
+    }, [id]);
+
+    console.log('comments:', comments);
 
     const handleCommentChange = (event) => {
         setCommentContent(event.target.value);
@@ -48,12 +60,11 @@ const Post = () => {
 
             console.log('response:', response);
 
-
-            if (response === 'success') {
-                setComments([...comments, commentContent]);
-                setCommentContent('');
-            } else {
+            if (response !== 'success') {
                 alert('댓글 등록에 실패했습니다.');
+            } else {
+                // 댓글 등록이 성공하면 댓글 목록을 새로 가져옵니다.
+                fetchComments();
             }
         }
     };
@@ -84,6 +95,11 @@ const Post = () => {
         }
     };
 
+    const fetchComments = async (page = 0) => {
+        const commentList = await getCommentList(10, page, post.id, token);
+        setComments(commentList);
+    };
+
 
     const handleUpdate = () => {
 
@@ -91,7 +107,7 @@ const Post = () => {
 
 
     const links = [
-        {text: '뒤로가기'},
+        {text: '뒤로가기', to: '/board'}
     ];
 
     return (
@@ -132,24 +148,14 @@ const Post = () => {
                                     </TableBody>
                                 </Table>
                             </Paper>
-                            <div>
-                                <TextField style={{paddingBlock: '20px'}}
-                                           label="New Comment"
-                                           value={commentContent}
-                                           onChange={handleCommentChange}
-                                />
-                                <Button style={{paddingBlock: '30px'}} onClick={handleCommentSubmit}>Submit</Button>
-                            </div>
-                            <div>
-                                {comments.map((comment, index) => (
-                                    <p key={index}>{comment}</p>
-                                ))}
-                            </div>
                             <Button variant="contained" color="primary"
-                                    style={{position: 'relative', left: 820, bottom: 80}}
-                                    onClick={handleUpdate}>수정</Button>
+                                    style={{position: 'relative', left: 820, top: 20}}
+                                    component={Link} to={`/updatepost/${post.id}`}
+                            >
+                                수정
+                            </Button>
                             <Button variant="contained" color="secondary"
-                                    style={{position: 'relative', left: 890, bottom: 80}}
+                                    style={{position: 'relative', left: 890, top: 20}}
                                     onClick={handleClickOpen}>삭제</Button>
                             <Dialog open={open} onClose={handleClose}>
                                 <DialogTitle>비밀번호를 입력하세요</DialogTitle>
@@ -172,6 +178,25 @@ const Post = () => {
                                     <Button onClick={handleDelete}>삭제</Button>
                                 </DialogActions>
                             </Dialog>
+                            <div>
+                                <TextField style={{paddingBlock: '20px'}}
+                                           label="New Comment"
+                                           value={commentContent}
+                                           onChange={handleCommentChange}
+                                />
+                                <Button style={{paddingBlock: '30px'}} onClick={handleCommentSubmit}>Submit</Button>
+                            </div>
+                            <div>
+                                {comments.content.map((comment, index) => (
+                                    <div key={index}>
+                                        <p>{comment.writer}</p>
+                                        <div style={{display: 'flex', position: 'relative' ,bottom: '25px'}}>
+                                            <p>{comment.content}</p>
+                                            <h6 style={{position: 'relative', left: '20px'}}>{comment.regDate}</h6>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </Container>
                     </>
                 ) : (

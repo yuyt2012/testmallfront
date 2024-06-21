@@ -70,6 +70,23 @@ export async function deletePost(postId, password, token) {
     }
 }
 
+export async function updatePost(UpdatePostDTO, postId, token) {
+    try {
+        const response = await axios({
+            method: 'put',
+            url: `http://localhost:8080/updatepost/${postId}`,
+            data: UpdatePostDTO,
+            headers: {
+                'Authorization': `${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
 export async function registerComment(commentDTO, token) {
     try {
         const response = await axios({
@@ -84,5 +101,30 @@ export async function registerComment(commentDTO, token) {
     } catch (error) {
         console.error(error);
         return null;
+    }
+}
+
+export async function getCommentList(size = 10, page = 0, postId, token) {
+    try {
+        const response = await axios({
+            method: 'get',
+            url: `http://localhost:8080/commentlist/${postId}`,
+            headers: {
+                'Authorization': `${token}`
+            },
+            params: {
+                size,
+                page
+            }
+        });
+        if (response.data && Array.isArray(response.data.content)) {
+            return response.data;
+        } else {
+            console.error('getCommentList: response.data.content is not an array');
+            return {content: []};
+        }
+    } catch (error) {
+        console.error(error);
+        return {content: []};
     }
 }

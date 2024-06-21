@@ -30,9 +30,9 @@ const Board = () => {
     const navigate = useNavigate();
     const sortedPosts = [...posts].sort((a, b) => new Date(b.regDate) - new Date(a.regDate));
     const token = localStorage.getItem('token');
-    const [page, setPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const size = 10;
+    const [page, setPage] = useState(0);
     const [totalPosts, setTotalPosts] = useState(0); // Add a state variable for the total number of posts
 
     useEffect(() => {
